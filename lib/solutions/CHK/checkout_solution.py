@@ -45,7 +45,6 @@ class CheckoutSolution:
         if not all(validated_skus):
             return -1
         sub_totals = self.convert_skus_to_list_of_dict(skus)
-        print('CHECKOUT SUB TOTALS', sub_totals)
         return self.calculate_total(sub_totals)
 
     def validate_each_sku(self, sku: str) -> bool:
@@ -77,7 +76,6 @@ class CheckoutSolution:
         return True
 
     def calculate_with_special_offer(self, item: dict) -> int:
-        print('LOOPING THROUGH ITEMS', item)
         special_offers = SPECIAL_OFFERS[item['sku']]
         if len(special_offers) == 1:
             special_offer = special_offers[0]
@@ -85,7 +83,6 @@ class CheckoutSolution:
                 item, special_offer)
             remaining_total = self.reminder_no_discount(item, remaining_count)
             total = total_with_offer + remaining_total
-            print('total with one offer')
             return total
 
         # order special offers by amount descending
@@ -95,24 +92,14 @@ class CheckoutSolution:
         for offer in special_offers_sorted:
 
             if item_count == 0:
-                print('item count is 0, breaking')
                 break
             elif item_count < offer['amount']:
-                print('item count', item_count, 'is less than offer amount', offer['amount'], 'breaking')
                 continue
             else:
-                print('item count', item_count, 'offer amount', offer['amount'])
                 total_with_offer, remaining_count = self.one_special_offer(item, offer)
-                print('item_count before offer', item_count)
-                print(remaining_count, 'remaining count after offer')
                 item_count = remaining_count
-                print('item count after offer', item_count)
                 total += total_with_offer
-                print('total inside loop', total, 'remaining count', remaining_count)
-        print('total before reminder', total)
         total += self.reminder_no_discount(item, item_count)
-        print('total after reminder', total)
-        print('total', total)
         return total
 
     def one_special_offer(self, item: dict, special_offer: dict) -> int:
@@ -121,27 +108,22 @@ class CheckoutSolution:
         total_with_offer = offer_count * special_offer['price']
         # remaining products
         remaining_count = item['count'] % special_offer['amount']
-        print('offer count', offer_count, 'total with offer', total_with_offer, 'remaining count', remaining_count)
         return total_with_offer, remaining_count
 
     def reminder_no_discount(self, item: dict, count: int) -> int:
         # if no discount, return the total price
-        print('remainder no discount', item['sku'], 'count', count)
         return item['price'] * count
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
-        print('SUB TOTALS', sub_totals)
         for item in sub_totals:
-            print('LOOPING ITEM', item)
             if self.has_special_offer(item):
                 total += self.calculate_with_special_offer(item)
-                print('total after special offer', total)
             else:
                 total += self.reminder_no_discount(item, item['count'])
-                print('total after no special offer', total)
 
         return total
+
 
 
 
