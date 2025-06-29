@@ -31,7 +31,6 @@ class TestCheckout():
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
         assert CheckoutSolution().checkout("") == 0
 
-    @pytest.mark.skip(reason="work in progress")
     def test_random_order(self):
         random_order = "ABCDCBAABCABBAAA"
         expected_A_7 = 200 + 100
@@ -54,12 +53,12 @@ class TestCheckout():
         assert CheckoutSolution().checkout("EE") == 80
         assert CheckoutSolution().checkout("EB") == 70
 
-
     def test_multiple_discounts(self):
         assert CheckoutSolution().checkout("AAAAAAAA") == 330
         assert CheckoutSolution().checkout("AAAAAAAAA") == 380
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
 
 
