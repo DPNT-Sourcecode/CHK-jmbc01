@@ -86,7 +86,24 @@ class CheckoutSolution:
         return True
 
     def calculate_with_special_offer(self, item: dict) -> int:
-        special_offer = SPECIAL_OFFERS[item['sku']]
+        special_offers = SPECIAL_OFFERS[item['sku']]
+        if len(special_offers) == 1:
+            special_offer = special_offers[0]
+            total_with_offer, remaining_count = self.one_special_offer(item, special_offer)
+            remaining_total = self.reminder_no_discount(item, remaining_count)
+            return total_with_offer + remaining_total
+
+
+        # order special offers by amount descending
+        special_offers_sorted = sorted(special_offers, key=lambda x: x['amount'], reverse=True)
+
+        # apply discount
+        # find the reminder
+        # apply discount
+        # find the remainder
+        # apply discount
+
+        
         # how many sets of products could qualify for the special offer
         offer_count = item['count'] // special_offer['amount']
         total_with_offer = offer_count * special_offer['price']
@@ -94,6 +111,18 @@ class CheckoutSolution:
         remaining_count = item['count'] % special_offer['amount']
         remaining_total = item['price'] * remaining_count
         return total_with_offer + remaining_total
+
+    def one_special_offer(self, item: dict, special_offer: dict) -> int:
+        # how many sets of products could qualify for the special offer
+        offer_count = item['count'] // special_offer['amount']
+        total_with_offer = offer_count * special_offer['price']
+        # remaining products
+        remaining_count = item['count'] % special_offer['amount']
+        return total_with_offer, remaining_count
+
+    def reminder_no_discount(self, item: dict) -> int:
+        # if no discount, return the total price
+        return item['price'] * item['count']
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
@@ -104,3 +133,4 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
