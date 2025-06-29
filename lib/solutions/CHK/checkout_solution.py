@@ -304,6 +304,7 @@ class CheckoutSolution:
 
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
         # if no discount, return the total price
+        print('no discount for', sku)
         price = self.basket[sku]['price']
         if not count:
             count = self.basket[sku]['count']
@@ -329,7 +330,10 @@ class CheckoutSolution:
             return total
         if qualifying_items_count < GROUP_DISCOUNT['qualifying_amount']:
             no_discount = self.reminder_no_discount(sku)
+            print(f"Not enough qualifying items for group discount. "
+                  f"Total without discount: {no_discount}")
             return total + no_discount
+        print('where are you')
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
         total += trigger_count * GROUP_DISCOUNT['price']
@@ -381,6 +385,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
