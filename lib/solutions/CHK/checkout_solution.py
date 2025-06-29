@@ -66,8 +66,25 @@ class CheckoutSolution:
                 'count': count,
                 'price': BASIC_PRICES.get(sku)
             }
-        return items_dict
+        updated_basket = self._update_basket_with_free_items(items_dict)
+        return updated_basket
 
+    def _update_basket_with_free_items(self, basket) -> dict:
+        updated_basket = basket.copy()
+        for items in self.unique_skus:
+            if items['sku'] not in FREE_ITEMS:
+                continue
+            free_item_promotions = FREE_ITEMS[items['sku']]
+            for promotion in free_item_promotions:
+                sku_item_to_get_for_free = promotion['free_item']
+                qualifying_amount = promotion['qualifying_amount']
+                item_qualifier = items
+                if item_qualifier['count'] < qualifying_amount:
+                    continue
+                # find the free item in basket
+                if sku_item_to_get_for_free in updated_basket:
+                    updated_basket[sku_item_to_get_for_free]['count'] += 1
+        return updated_basket
 
     def has_special_offer(self, sku: str) -> bool:
         is_in_special_offers = sku in SPECIAL_OFFERS
@@ -175,6 +192,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
 
 
 
