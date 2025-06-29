@@ -58,9 +58,13 @@ class CheckoutSolution:
 
     def has_special_offer(self, item: dict) -> bool:
         is_in_special_offers = item['sku'] in SPECIAL_OFFERS
+        if not is_in_special_offers:
+            return False
         amount_qualifying = SPECIAL_OFFERS[item['sku']]['amount']
         amount_qualifies = item['count'] >= amount_qualifying
-        return is_in_special_offers and amount_qualifies
+        if not amount_qualifies:
+            return False
+        return True
 
     def calculate_with_special_offer(self, item: dict) -> int:
         special_offer = SPECIAL_OFFERS[item['sku']]
@@ -80,6 +84,7 @@ class CheckoutSolution:
             total += item['price'] * item['count']
 
         return total
+
 
 
 
