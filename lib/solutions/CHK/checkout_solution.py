@@ -181,7 +181,9 @@ class CheckoutSolution:
                 print('Updated amount is less than free item amount, returning updated amount:', updated_amount)
                 return updated_amount
             updated_amount -= free_item_amount
-            processed_for_promotion -= qualifying_amount - free_item_amount
+            print(f"Processed for promotion before reduction: {processed_for_promotion}")  # noqa
+            processed_for_promotion -= qualifying_amount
+            processed_for_promotion -= free_item_amount
             print(f"Processed for promotion: {processed_for_promotion}")  # noqa
             print(f"Updated amount after reduction: {updated_amount}")
             triggers_run -= 1
@@ -265,6 +267,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
