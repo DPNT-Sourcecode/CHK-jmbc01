@@ -27,6 +27,11 @@ FREE_ITEMS_PROMOTIONS = {
         'free_item': 'B',
         'free_item_amount': 1,
     }],
+    'F': [{
+        'qualifying_amount': 2,
+        'free_item': 'F',
+        'free_item_amount': 1,
+    }],
 }
 
 
@@ -179,3 +184,4 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+

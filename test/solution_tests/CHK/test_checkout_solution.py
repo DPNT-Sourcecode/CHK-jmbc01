@@ -41,6 +41,10 @@ class TestCheckout():
             expected_A_7 + expected_B_5 + expected_C_3 + expected_D_1)
         assert CheckoutSolution().checkout(random_order) == total_expected
 
+    def test_another_random_order(self):
+        random_order = "ABCDECBAABCABBAAAEEAA"
+        assert CheckoutSolution().checkout(random_order) == 665
+
     def test_free_item(self):
         assert CheckoutSolution().checkout("EEB") == 80
 
@@ -61,4 +65,5 @@ class TestCheckout():
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
         assert CheckoutSolution().checkout("BEBEEE") == 160
+
 
