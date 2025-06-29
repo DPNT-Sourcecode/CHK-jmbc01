@@ -192,5 +192,3 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
-
-
