@@ -64,5 +64,7 @@ class TestCheckout():
         assert CheckoutSolution().checkout(random_order) == total_expected
 
     def test_free_items(self):
-        assert CheckoutSolution().checkout("EEB") == 40
+        assert CheckoutSolution().checkout("EEB") == 80
+        assert CheckoutSolution().checkout("EEBEE") == 80 + 80
+
 

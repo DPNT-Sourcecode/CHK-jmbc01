@@ -117,7 +117,7 @@ class CheckoutSolution:
         if item['sku'] not in FREE_ITEMS:
             return 0
         free_items = FREE_ITEMS[item['sku']]
-        total_free_items = 0
+        deduction = 0
         for free_item in free_items:
             qualifying_amount = free_item['qualifying_amount']
             if item['count'] < qualifying_amount:
@@ -129,9 +129,9 @@ class CheckoutSolution:
             # find the free item in sub_totals
             for sub_total in sub_totals:
                 if sub_total['sku'] == free_item['free_item']:
-                    total_free_items += sets_of_qualifying_items * free_item_count * sub_total['price']
+                    deduction += sets_of_qualifying_items * free_item_count * sub_total['price']
                     break
-        return total_free_items
+        return deduction
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
@@ -143,6 +143,7 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
 
 
 
