@@ -3,10 +3,19 @@ from solutions.CHK.checkout_solution import CheckoutSolution
 
 
 class TestCheckout():
-    def test_checkout(self):
-        with pytest.raises(ValueError):
+    def test_validate_parameter_skus(self):
+        with pytest.raises(ValueError) as e:
             CheckoutSolution().checkout("")
-        assert CheckoutSolution().checkout("A") == 50
+        assert str(e.value) == "Input cannot be empty"
+        with pytest.raises(TypeError) as e:
+            CheckoutSolution().checkout(123)
+        assert str(e.value) == "Input must be a string containing SKUs"
+
+
+    def test_validate_each_sku(self):
+        with pytest.raises(ValueError) as e:
+            CheckoutSolution().checkout("E")
+        assert str(e.value) == "Invalid SKU: E"
 
 
 
