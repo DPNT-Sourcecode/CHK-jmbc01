@@ -46,8 +46,3 @@ class CheckoutSolution:
 
     def calculate_total(self, skus: str) -> int:
         return sum(BASIC_PRICES[sku] for sku in skus)
-
-
-
-
-
