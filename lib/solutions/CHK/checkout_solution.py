@@ -89,6 +89,7 @@ class CheckoutSolution:
         item_count = item['count']
         for offer in special_offers_sorted:
             if item_count == 0:
+                print('item count is 0, breaking')
                 break
             if item_count >= offer['amount']:
                 print('item count', item_count, 'offer amount', offer['amount'])
@@ -97,7 +98,8 @@ class CheckoutSolution:
                 total += total_with_offer
                 print('total inside loop', total, 'remaining count', remaining_count)
             
-            else:
+            elif item_count < offer['amount'] and item_count > 0:
+                print('inside reminder', item_count, 'offer amount', offer['amount'])
                 print('running reminder')
                 # if the item count is less than the offer amount
                 total += self.reminder_no_discount(item)
@@ -127,5 +129,6 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
