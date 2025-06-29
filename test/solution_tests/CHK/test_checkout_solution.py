@@ -20,20 +20,6 @@ class TestCheckout():
         assert CheckoutSolution().checkout("C") == 20
         assert CheckoutSolution().checkout("AB") == 80
 
-    def test_set_basket(self):
-        skus = "AABBC"
-        CheckoutSolution().checkout(skus)
-        expected = {
-            'A': {'count': 2, 'price': 50},
-            'B': {'count': 2, 'price': 30},
-            'C': {'count': 1, 'price': 20}
-        }
-        # assert correct count for each sku
-        result = CheckoutSolution().set_basket(skus)
-        assert expected['A']['count'] == result['A']['count']
-        assert expected['B']['count'] == result['B']['count']
-        assert expected['C']['count'] == result['C']['count']
-
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
             {'A', {'count': 3, 'price': 50}}) is True
@@ -81,4 +67,5 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
 

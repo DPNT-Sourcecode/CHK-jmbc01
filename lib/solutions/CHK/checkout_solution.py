@@ -65,6 +65,7 @@ class CheckoutSolution:
                 'price': BASIC_PRICES.get(sku)
             }
         updated_basket = self._update_basket_with_free_items(items_dict)
+        print('setting basket:', updated_basket)
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -160,3 +161,4 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
