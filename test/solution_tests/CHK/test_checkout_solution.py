@@ -43,3 +43,10 @@ class TestCheckout():
         assert CheckoutSolution().has_special_offer(
             {'sku': 'C', 'count': 1, 'price': 20}) is False
 
+    def test_calculate_total_with_special_offers(self):
+        assert CheckoutSolution().checkout("AAA") == 130
+        assert CheckoutSolution().checkout("AAABBB") == 175
+        assert CheckoutSolution().checkout("AABBC") == 130
+        assert CheckoutSolution().checkout("AABBBCC") == 175
+        assert CheckoutSolution().checkout("AABBBCCDD") == 175 + 15
+        assert CheckoutSolution().checkout("AABBBCCDDDD") == 175 + 15 + 15

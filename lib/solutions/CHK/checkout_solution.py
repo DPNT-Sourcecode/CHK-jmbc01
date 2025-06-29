@@ -38,7 +38,7 @@ class CheckoutSolution:
 
         sub_totals = self.convert_skus_to_list_of_dict(skus)
         # todo fix to function
-        return 5
+        return self.calculate_total(sub_totals)
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -84,9 +84,3 @@ class CheckoutSolution:
             total += item['price'] * item['count']
 
         return total
-
-
-
-
-
-
