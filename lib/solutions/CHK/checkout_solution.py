@@ -338,9 +338,3 @@ class CheckoutSolution:
                 product_total += self.calculate_with_group_discount(sku)
             total += product_total
         return total
-
-
-
-
-
-
