@@ -101,7 +101,7 @@ FREE_ITEMS_PROMOTIONS = {
     }],
 }
 
-GROUP_DISCOUNTS = [
+BUY_ANY_GROUP_OF_ITEMS = [
     {
         'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
         'qualifying_amount': 3,
@@ -255,10 +255,7 @@ class CheckoutSolution:
             self.basket[sku]['count'] >= amount for amount in amounts_qualifying)  # noqa
         if not amount_qualifies:
             return False
-        group_promotions_items = [
-            offer['qualifying_items'] for offer in GROUP_DISCOUNTS]
-        if sku not in group_promotions_items:
-            return False
+        
         return True
 
     def calculate_with_special_offer(self, sku: str) -> int:
@@ -325,6 +322,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
