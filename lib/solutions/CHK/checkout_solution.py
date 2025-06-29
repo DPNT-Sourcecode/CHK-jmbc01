@@ -96,19 +96,19 @@ class CheckoutSolution:
             return False
         amounts_qualifying = [
             offer['amount'] for offer in SPECIAL_OFFERS[sku]]
-        amount_qualifies = any(
-            item['count'] >= amount for amount in amounts_qualifying)
+        # todo is any correct?
+        amount_qualifies = any(self.basket[sku]['count'] >= amount for amount in amounts_qualifying)
         if not amount_qualifies:
             return False
         return True
 
-    def calculate_with_special_offer(self, item: dict) -> int:
-        special_offers = SPECIAL_OFFERS[item['sku']]
+    def calculate_with_special_offer(self, sku: str) -> int:
+        special_offers = SPECIAL_OFFERS[sku]
         if len(special_offers) == 1:
             special_offer = special_offers[0]
             total_with_offer, remaining_count = self.one_special_offer(
-                item, special_offer)
-            remaining_total = self.reminder_no_discount(item, remaining_count)
+                sku, special_offer)
+            remaining_total = self.reminder_no_discount(sku, remaining_count)
             total = total_with_offer + remaining_total
             return total
 
@@ -116,7 +116,7 @@ class CheckoutSolution:
         special_offers_sorted = sorted(
             special_offers, key=lambda x: x['amount'], reverse=True)
         total = 0
-        item_count = item['count']
+        item_count = self.basket[sku]['count']
         for offer in special_offers_sorted:
 
             if item_count == 0:
@@ -128,10 +128,10 @@ class CheckoutSolution:
                     item, offer)
                 item_count = remaining_count
                 total += total_with_offer
-        total += self.reminder_no_discount(item, item_count)
+        total += self.reminder_no_discount(sku, item_count)
         return total
 
-    def one_special_offer(self, item: dict, special_offer: dict) -> int:
+    def one_special_offer(self, sku: str, special_offer: dict) -> int:
         # how many sets of products could qualify for the special offer
         offer_count = item['count'] // special_offer['amount']
         total_with_offer = offer_count * special_offer['price']
@@ -151,10 +151,11 @@ class CheckoutSolution:
         total = 0
         for sku in self.unique_skus:
             if self.has_special_offer(sku):
-                total += self.calculate_with_special_offer(item)
+                total += self.calculate_with_special_offer(sku)
             else:
-                total += self.reminder_no_discount(item, item['count'])
+                total += self.reminder_no_discount(sku)
 
         return total
+
 
 
