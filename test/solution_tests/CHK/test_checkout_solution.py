@@ -37,12 +37,9 @@ class TestCheckout():
         # order of items will be different
         # because we got the set of skus before we created a list
         assert len(result) == len(expected)
-        # find item with sku value 'A' in result
         for item in expected:
-            print(item)
-            print(result)
             assert item in result, f"Expected {item} not found in result"
-        assert False
+
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
             {'sku': 'A', 'count': 3, 'price': 50}) is True
@@ -58,5 +55,6 @@ class TestCheckout():
         assert CheckoutSolution().checkout("AABBBCC") == 175
         assert CheckoutSolution().checkout("AABBBCCDD") == 175 + 15
         assert CheckoutSolution().checkout("AABBBCCDDDD") == 175 + 15 + 15
+
 
 
