@@ -68,3 +68,10 @@ class TestCheckout():
 
     def test_multiple_free_items(self):
         assert CheckoutSolution().checkout("EEBEE") == 80 + 80
+
+    def test_free_item_offer_no_qualifying_items(self):
+        assert CheckoutSolution().checkout("E") == 40
+        assert CheckoutSolution().checkout("B") == 30
+        assert CheckoutSolution().checkout("EE") == 80
+        assert CheckoutSolution().checkout("EB") == 70
+
