@@ -113,6 +113,26 @@ class CheckoutSolution:
         # if no discount, return the total price
         return item['price'] * count
 
+    def free_items_deduction(self, item: dict, sub_totals: list) -> int:
+        if item['sku'] not in FREE_ITEMS:
+            return 0
+        free_items = FREE_ITEMS[item['sku']]
+        total_free_items = 0
+        for free_item in free_items:
+            qualifying_amount = free_item['qualifying_amount']
+            if item['count'] < qualifying_amount:
+                continue
+            # how many sets of qualifying items
+            sets_of_qualifying_items = item['count'] // qualifying_amount
+            # how many free items per set
+            free_item_count = free_item['free_item_amount']
+            # find the free item in sub_totals
+            for sub_total in sub_totals:
+                if sub_total['sku'] == free_item['free_item']:
+                    total_free_items += sets_of_qualifying_items * free_item_count * sub_total['price']
+                    break
+        return total_free_items
+
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
         for item in sub_totals:
@@ -120,8 +140,10 @@ class CheckoutSolution:
                 total += self.calculate_with_special_offer(item)
             else:
                 total += self.reminder_no_discount(item, item['count'])
+            total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
 
 
 
