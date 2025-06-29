@@ -129,10 +129,16 @@ class CheckoutSolution:
             sets_of_qualifying_items = item['count'] // qualifying_amount
             # how many free items per set
             free_item_count = free_item['free_item_amount']
-            available_free_items = 
+
             # find the free item in sub_totals
             for sub_total in sub_totals:
                 if sub_total['sku'] == free_item_sku:
+                    available_free_items = sub_total['count']
+                    if available_free_items < free_item_count:
+                        print(f'Not enough free items {free_item_sku} available: {available_free_items}, needed: {free_item_count}')
+                        continue
+                    # if multiple sets - need to calculate the remainder
+                    qualifying_count 
                     deduction += sets_of_qualifying_items * free_item_count * sub_total['price']
                     break
         print('Free items deduction:', deduction)
@@ -152,5 +158,6 @@ class CheckoutSolution:
             print('Final total:', total)
 
         return total
+
 
 
