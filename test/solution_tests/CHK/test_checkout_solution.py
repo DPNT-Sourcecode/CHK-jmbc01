@@ -73,3 +73,12 @@ class TestCheckout():
         assert CheckoutSolution().checkout("FFFF") == 20 + 10
         assert CheckoutSolution().checkout("FFFFF") == 20 + 20
         assert CheckoutSolution().checkout("FFFFFF") == 20 + 20
+
+    def test_multiple_offers(self):
+        assert CheckoutSolution().checkout("STX") == 45
+        assert CheckoutSolution().checkout("STY") == 45
+        assert CheckoutSolution().checkout("STZ") == 45
+        assert CheckoutSolution().checkout("STXY") == 90
+        assert CheckoutSolution().checkout("STXZ") == 90
+        assert CheckoutSolution().checkout("STYZ") == 90
+        assert CheckoutSolution().checkout("STXYZ") == 45 + 20 + 21
