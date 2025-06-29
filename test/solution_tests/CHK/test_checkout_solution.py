@@ -34,12 +34,15 @@ class TestCheckout():
         ]
         # assert correct count for each sku
         result = CheckoutSolution().convert_skus_to_list_of_dict(skus)
+        # order of items will be different
+        # because we got the set of skus before we created a list
         assert len(result) == len(expected)
-        assert result[0]['sku'] == expected[0]['sku']
-        assert result[0]['count'] == expected[0]['count']
-        assert result[0]['price'] == expected[0]['price']
-        assert result[1]['count'] == expected[1]['count']
-
+        # find item with sku value 'A' in result
+        for item in expected:
+            print(item)
+            print(result)
+            assert item in result, f"Expected {item} not found in result"
+        assert False
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
             {'sku': 'A', 'count': 3, 'price': 50}) is True
@@ -55,4 +58,5 @@ class TestCheckout():
         assert CheckoutSolution().checkout("AABBBCC") == 175
         assert CheckoutSolution().checkout("AABBBCCDD") == 175 + 15
         assert CheckoutSolution().checkout("AABBBCCDDDD") == 175 + 15 + 15
+
 
