@@ -118,7 +118,7 @@ class CheckoutSolution:
             amount_remaining: int,
             free_item_amount: int) -> int:
         updated_amount = amount_remaining
-        
+
         if updated_amount < 0:
             raise ValueError(
                 f"Amount remaining cannot be negative: {amount_remaining}"
@@ -127,12 +127,16 @@ class CheckoutSolution:
         for _ in range(triggers):
             print('inside forlooptriggers_run:', triggers_run)  # noqa
             if updated_amount == 0:
+                print('Updated amount is 0, returning 0')
                 return 0
             if triggers_run == 0:
+                print('No more triggers to run, returning updated amount:', updated_amount)
                 return updated_amount
             if updated_amount < free_item_amount:
+                print('Updated amount is less than free item amount, returning updated amount:', updated_amount)
                 return updated_amount
             updated_amount -= free_item_amount
+            print(f"Updated amount after reduction: {updated_amount}")
             triggers_run -= 1
         print('triggers_run:', triggers_run)  # noqa
         return updated_amount
@@ -214,10 +218,3 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
-
-
-
-
-
-
-
