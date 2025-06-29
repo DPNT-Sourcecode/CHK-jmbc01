@@ -130,6 +130,7 @@ class CheckoutSolution:
                 sku, special_offer)
             remaining_total = self.reminder_no_discount(sku, remaining_count)
             total = total_with_offer + remaining_total
+            print('calculate_with_special_offer:', total)
             return total
 
         # order special offers by amount descending
@@ -178,10 +179,11 @@ class CheckoutSolution:
         total = 0
         for sku in self.unique_skus:
             if self.has_special_offer(sku):
-                total += self.calculate_with_special_offer(sku)
+                return self.calculate_with_special_offer(sku)
             else:
-                total += self.reminder_no_discount(sku)
+                return self.reminder_no_discount(sku)
         return total
+
 
 
 
