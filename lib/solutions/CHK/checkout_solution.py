@@ -71,6 +71,7 @@ class CheckoutSolution:
                 'price': BASIC_PRICES.get(sku)
             }
         updated_basket = self._update_basket_with_free_items(items_dict)
+        print(f"Updated basket: {updated_basket}")  # noqa
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -90,6 +91,12 @@ class CheckoutSolution:
                     continue
                 qualifying_amount = promotion['qualifying_amount']
                 actual_amount = item['count']
+                if sku_free_item == sku:
+                    if actual_amount <= qualifying_amount:
+                        # if the free item is the same as the qualifying item
+                        # we only apply promotion if the amount is greater
+                        # than the qualifying amount
+                        continue
                 if actual_amount < qualifying_amount:
                     continue
                 promotion_trigger_count, _ = divmod(
@@ -185,4 +192,5 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
