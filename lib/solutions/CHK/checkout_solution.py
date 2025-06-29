@@ -321,13 +321,15 @@ class CheckoutSolution:
     def calculate_with_group_discount(self, sku: str) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
-
+        print(f"Calculating group discount for SKUs: {sku}")
         qualifying_skus = GROUP_DISCOUNT['qualifying_items']
         qualifying_items_count = self.count_qualifying_items(qualifying_skus)
         if not qualifying_items_count:
+            print("No qualifying items for group discount.")
             return total
         if qualifying_items_count < GROUP_DISCOUNT['qualifying_amount']:
-            return total
+            no_discount = self.reminder_no_discount(sku)
+            return total + no_discount
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
         total += trigger_count * GROUP_DISCOUNT['price']
@@ -379,5 +381,6 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
