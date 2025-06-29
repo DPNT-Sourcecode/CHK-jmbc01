@@ -65,7 +65,13 @@ class CheckoutSolution:
                 'price': BASIC_PRICES.get(sku)
             }
         updated_basket = self._update_basket_with_free_items(items_dict)
-        print('setting basket:', updated_basket)
+        # for sku, item in updated_basket.items():
+        #     if item['count'] < 0:
+        #         raise ValueError(
+        #             f"Invalid basket: {sku} has negative count: {item['count']}")
+        #     if item['count'] == 0:
+        #         del updated_basket[sku]
+        # print('setting basket:', updated_basket)
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -106,6 +112,7 @@ class CheckoutSolution:
                 if sku_free_item in updated_basket.keys():
                     print('updating basket')
                     updated_basket[sku_free_item]['count'] -= free_items_to_deduct  # noqa
+
         return updated_basket
 
     def has_special_offer(self, sku: str) -> bool:
@@ -174,6 +181,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
