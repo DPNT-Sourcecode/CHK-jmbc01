@@ -66,7 +66,7 @@ class CheckoutSolution:
 
 
     def has_special_offer(self, item: dict) -> bool:
-        is_in_special_offers = item['sku'] in SPECIAL_OFFERS
+        is_in_special_offers = item.keys() in SPECIAL_OFFERS
         if not is_in_special_offers:
             return False
         amounts_qualifying = [
@@ -173,6 +173,7 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
 
 
 

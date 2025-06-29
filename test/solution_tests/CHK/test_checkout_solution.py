@@ -35,11 +35,11 @@ class TestCheckout():
 
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
-            {'sku': 'A', 'count': 3, 'price': 50}) is True
+            {'A', {'count': 3, 'price': 50}}) is True
         assert CheckoutSolution().has_special_offer(
-            {'sku': 'B', 'count': 2, 'price': 30}) is True
+            {'B', {'count': 2, 'price': 30}}) is True
         assert CheckoutSolution().has_special_offer(
-            {'sku': 'C', 'count': 1, 'price': 20}) is False
+            {'C', {'count': 1, 'price': 20}}) is False
 
     def test_calculate_total_with_special_offers(self):
         assert CheckoutSolution().checkout("AAA") == 130
@@ -80,4 +80,5 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
 
