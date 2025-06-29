@@ -35,15 +35,10 @@ class CheckoutSolution:
         # check for special offers
         # sum each product
         # sum the total
-        unique_skus = set(skus)
-        sub_totals = [
-            {
-                'sku': sku,
-                'count': skus.count(sku),
-                'price': BASIC_PRICES[sku],
-            } for sku in unique_skus
-        ]
-        return self.calculate_total(sub_totals)
+
+        sub_totals = self.convert_skus_to_list_of_dict(skus)
+        # todo fix to function
+        return 5
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -85,6 +80,7 @@ class CheckoutSolution:
             total += item['price'] * item['count']
 
         return total
+
 
 
 

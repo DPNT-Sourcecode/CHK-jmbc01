@@ -24,3 +24,17 @@ class TestCheckout():
         assert CheckoutSolution().checkout("B") == 30
         assert CheckoutSolution().checkout("C") == 20
         assert CheckoutSolution().checkout("AB") == 80
+
+    def test_convert_skus_to_list_of_dict(self):
+        skus = "AABBC"
+        expected = [
+            {'sku': 'A', 'count': 2, 'price': 50},
+            {'sku': 'B', 'count': 2, 'price': 30},
+            {'sku': 'C', 'count': 1, 'price': 20}
+        ]
+        assert CheckoutSolution().convert_skus_to_list_of_dict(skus) == expected
+
+    def test_has_special_offer(self):
+        assert CheckoutSolution().has_special_offer({'sku': 'A', 'count': 3, 'price': 50}) is True
+        assert CheckoutSolution().has_special_offer({'sku': 'B', 'count': 2, 'price': 30}) is True
+        assert CheckoutSolution().has_special_offer({'sku': 'C', 'count': 1, 'price': 20}) is False
