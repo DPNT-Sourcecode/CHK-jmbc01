@@ -305,7 +305,7 @@ class CheckoutSolution:
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
         # if no discount, return the total price
         print('no discount for', sku)
-        price = self.basket[sku]['price']
+        price = BASIC_PRICES[sku]
         if not count:
             count = self.basket[sku]['count']
         total = price * count
@@ -322,19 +322,22 @@ class CheckoutSolution:
     def calculate_with_group_discount(self, skus: list) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
-        print(f"Calculating group discount for SKUs: {sku}")
+        print(f"Calculating group discount for SKUs: {skus}")
         qualifying_skus = GROUP_DISCOUNT['qualifying_items']
         qualifying_items_count = self.count_qualifying_items(qualifying_skus)
         if not qualifying_items_count:
             print("No qualifying items for group discount.")
             return total
         if qualifying_items_count < GROUP_DISCOUNT['qualifying_amount']:
-            print('what is sku', sku)
-            print('type of sku', type(sku))
-            no_discount = self.reminder_no_discount(sku)
+            print('what is sku', skus)
+            print('type of sku', type(skus))
+            reminder_total = 0
+            for sku in qualifying_skus:
+
+                reminder_total += self.reminder_no_discount(sku)
             print(f"Not enough qualifying items for group discount. "
-                  f"Total without discount: {no_discount}")
-            return total + no_discount
+                  f"Total without discount: {reminder_total}")
+            return total + reminder_total
         print('where are you')
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
@@ -357,11 +360,11 @@ class CheckoutSolution:
                 item_count = self.basket[sku]['count']
                 if item_count <= items_to_calculate_count:
                     total_for_remaining_items += (
-                        self.basket[sku]['price'] * item_count)
+                        BASIC_PRICES[sku] * item_count)
                     items_to_calculate_count -= item_count
                 else:
                     total_for_remaining_items += (
-                        self.basket[sku]['price'] * items_to_calculate_count)
+                        BASIC_PRICES[sku] * items_to_calculate_count)
                     items_to_calculate_count = 0
 
             total += total_for_remaining_items
@@ -387,6 +390,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
