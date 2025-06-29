@@ -32,6 +32,7 @@ FREE_ITEMS = {
 
 class CheckoutSolution:
     basket: dict = {}
+    unique_skus: set = set()
 
     # skus = unicode string
     def checkout(self, skus: str) -> int:
@@ -44,10 +45,10 @@ class CheckoutSolution:
         validated_skus = [self.validate_each_sku(sku) for sku in skus]
         if not all(validated_skus):
             return -1
-        unique_skus = set(skus)
-        basket = self.convert_skus_to_dict(unique_skus)
+        self.unique_skus = set(skus)
+        basket = self.convert_skus_to_dict(self.unique_skus)
         basket_reduced = self.update_totals_with_free_items(basket)
-        return self.calculate_total(unique_skus, basket_reduced)
+        return self.calculate_total(basket_reduced)
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -165,13 +166,14 @@ class CheckoutSolution:
                     break
         return deduction
 
-    def calculate_total(self, unique_skus: set, sub_totals: list) -> int:
+    def calculate_total(self, sub_totals: list) -> int:
         total = 0
-        for sku in unique_skus:
+        for sku in self.unique_skus:
             if self.has_special_offer(sku):
                 total += self.calculate_with_special_offer(item)
             else:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
 
