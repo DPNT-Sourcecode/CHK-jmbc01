@@ -84,7 +84,9 @@ class CheckoutSolution:
         for item in sub_totals:
             if self.has_special_offer(item):
                 total += self.calculate_with_special_offer(item)
-            total += item['price'] * item['count']
+            else:
+                total += item['price'] * item['count']
 
         return total
+
 

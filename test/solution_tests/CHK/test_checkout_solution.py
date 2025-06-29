@@ -50,11 +50,12 @@ class TestCheckout():
 
     def test_calculate_total_with_special_offers(self):
         assert CheckoutSolution().checkout("AAA") == 130
-        assert CheckoutSolution().checkout("AAABBB") == 175
-        assert CheckoutSolution().checkout("AABBC") == 130
-        assert CheckoutSolution().checkout("AABBBCC") == 175
-        assert CheckoutSolution().checkout("AABBBCCDD") == 175 + 15
+        assert CheckoutSolution().checkout("AAABBB") == 130 + 45 + 30
+        assert CheckoutSolution().checkout("AABBC") == 100 + 45 + 20
+        assert CheckoutSolution().checkout("AABBBCC") == 100 + 45 + 30 + 40
+        assert CheckoutSolution().checkout("AABBBCCDD") == 100 + 45 + 30 + 40 + 30
         assert CheckoutSolution().checkout("AABBBCCDDDD") == 175 + 15 + 15
+
 
 
 
