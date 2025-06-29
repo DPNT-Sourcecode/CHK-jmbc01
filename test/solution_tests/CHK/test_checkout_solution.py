@@ -44,6 +44,13 @@ class TestCheckout():
         random_order = "ABCDECBAABCABBAAAEEAA"
         assert CheckoutSolution().checkout(random_order) == 665
 
+    def test_one_more_random_order(self):
+        random_order = "ABCDEFGHIJKLMNOPQRSTUVW"
+        assert CheckoutSolution().checkout(random_order) == 795
+
+    def test_free_item_offer(self):
+        assert CheckoutSolution().checkout("EEB") == 80
+
     def test_free_item(self):
         assert CheckoutSolution().checkout("EEB") == 80
 
@@ -90,3 +97,4 @@ class TestCheckout():
         assert CheckoutSolution().checkout("T") == 20
         assert CheckoutSolution().checkout("X") == 17
         assert CheckoutSolution().checkout("XS") == 30 + 17
+

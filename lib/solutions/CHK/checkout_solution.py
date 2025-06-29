@@ -10,7 +10,7 @@ BASIC_PRICES = {
     'H': 10,
     'I': 35,
     'J': 60,
-    'K': 70,
+    'K': 90,
     'L': 90,
     'M': 15,
     'N': 40,
@@ -18,7 +18,7 @@ BASIC_PRICES = {
     'P': 50,
     'Q': 30,
     'R': 50,
-    'S': 30,
+    'S': 20,
     'T': 20,
     'U': 40,
     'V': 50,
@@ -379,4 +379,5 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
