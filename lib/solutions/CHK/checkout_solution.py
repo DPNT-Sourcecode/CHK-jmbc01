@@ -116,6 +116,9 @@ class CheckoutSolution:
         # if no discount, return the total price
         return item['price'] * count
 
+
+    def apply_free_item_offers(self, sub_totals: list) -> list:
+        
     def free_items_deduction(self, item: dict, sub_totals: list) -> int:
         if item['sku'] not in FREE_ITEMS:
             return 0
@@ -155,4 +158,5 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
 
