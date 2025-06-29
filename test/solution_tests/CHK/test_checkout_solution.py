@@ -63,8 +63,8 @@ class TestCheckout():
         total_expected = expected_A_7 + expected_B_5 + expected_C_3 + expected_D_1
         assert CheckoutSolution().checkout(random_order) == total_expected
 
-    def test_free_items(self):
+    def test_free_item(self):
         assert CheckoutSolution().checkout("EEB") == 80
+
+    def test_multiple_free_items(self):
         assert CheckoutSolution().checkout("EEBEE") == 80 + 80
-
-

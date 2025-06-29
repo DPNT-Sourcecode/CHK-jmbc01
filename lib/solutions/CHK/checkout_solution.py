@@ -138,18 +138,14 @@ class CheckoutSolution:
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
         for item in sub_totals:
+            print('Calculating total for item:', item)
             if self.has_special_offer(item):
                 total += self.calculate_with_special_offer(item)
             else:
                 total += self.reminder_no_discount(item, item['count'])
+            print('total after item:', total)
+        for item in sub_totals:
             total -= self.free_items_deduction(item, sub_totals)
+            print('Final total:', total)
 
         return total
-
-
-
-
-
-
-
-
