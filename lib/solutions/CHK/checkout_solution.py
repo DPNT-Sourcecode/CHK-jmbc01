@@ -6,6 +6,28 @@ BASIC_PRICES = {
     'D': 15,
     'E': 40,
     'F': 10,
+    'E': 40,
+    'F': 10,
+    'G': 20,
+    'H': 10,
+    'I': 35,
+    'J': 60,
+    'K': 80,
+    'L': 90,
+    'M': 15,
+    'N': 40,
+    'O': 10,
+    'P': 50,
+    'Q': 30,
+    'R': 50,
+    'S': 30,
+    'T': 20,
+    'U': 40,
+    'V': 50,
+    'W': 20,
+    'X': 90,
+    'Y': 10,
+    'Z': 50,
 }
 
 SPECIAL_OFFERS = {
@@ -20,6 +42,35 @@ SPECIAL_OFFERS = {
         'amount': 2,
         'price': 45,
     }],
+    'H': [{
+        'amount': 5,
+        'price': 45,
+    },
+    {
+        'amount': 10,
+        'price': 80,
+    }],
+    'K': [{
+        'amount': 2,
+        'price': 150,
+    }],
+    'P': [{
+        'amount': 5,
+        'price': 200,
+    }],
+    'Q': [{
+        'amount': 3,
+        'price': 80,
+    }],
+    'V': [{
+        'amount': 2,
+        'price': 90,
+    },
+    {
+        'amount': 3,
+        'price': 130,
+    }],
+
 }
 
 FREE_ITEMS_PROMOTIONS = {
@@ -31,6 +82,21 @@ FREE_ITEMS_PROMOTIONS = {
     'F': [{
         'qualifying_amount': 2,
         'free_item': 'F',
+        'free_item_amount': 1,
+    }],
+    'N': [{
+        'qualifying_amount': 3,
+        'free_item': 'M',
+        'free_item_amount': 1,
+    }],
+    'R': [{
+        'qualifying_amount': 3,
+        'free_item': 'Q',
+        'free_item_amount': 1,
+    }],
+    'U': [{
+        'qualifying_amount': 3,
+        'free_item': 'U',
         'free_item_amount': 1,
     }],
 }
@@ -247,3 +313,4 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
