@@ -255,7 +255,7 @@ class CheckoutSolution:
             self.basket[sku]['count'] >= amount for amount in amounts_qualifying)  # noqa
         if not amount_qualifies:
             return False
-        
+
         return True
 
     def calculate_with_special_offer(self, sku: str) -> int:
@@ -396,6 +396,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
