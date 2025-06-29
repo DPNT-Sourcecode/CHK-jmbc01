@@ -102,11 +102,19 @@ class CheckoutSolution:
                 promotion_trigger_count, _ = divmod(
                     actual_amount, qualifying_amount)
                 print(f"Promotion trigger count for {sku}: {promotion_trigger_count}")
-                reduced_amount = self._apply_reduction_rounds(
-                    triggers=promotion_trigger_count,
-                    amount_remaining=items_in_basket,
-                    free_item_amount=free_item_amount
-                )
+                if sku_free_item == sku:
+                    reduced_amount = self._apply_reduction_rounds_same_product(
+                        triggers=promotion_trigger_count,
+                        amount_remaining=items_in_basket,
+                        free_item_amount=free_item_amount,
+                        qualifying_amount=qualifying_amount
+                    )
+                else:
+                    reduced_amount = self._apply_reduction_rounds(
+                        triggers=promotion_trigger_count,
+                        amount_remaining=items_in_basket,
+                        free_item_amount=free_item_amount
+                    )
                 print(f"Reduced amount for {sku_free_item}: {reduced_amount}")  # noqa
                 if sku_free_item in updated_basket.keys():
                     updated_basket[sku_free_item]['count'] = reduced_amount  # noqa
@@ -132,6 +140,41 @@ class CheckoutSolution:
                 return 0
             if triggers_run == 0:
                 print('No more triggers to run, returning updated amount:', updated_amount)
+                return updated_amount
+            if updated_amount < free_item_amount:
+                print('Updated amount is less than free item amount, returning updated amount:', updated_amount)
+                return updated_amount
+            updated_amount -= free_item_amount
+            print(f"Updated amount after reduction: {updated_amount}")
+            triggers_run -= 1
+        print('triggers_run:', triggers_run)  # noqa
+        return updated_amount
+
+
+    def _apply_reduction_rounds_same_product(
+            self, *,
+            triggers: int,
+            amount_remaining: int,
+            free_item_amount: int,
+            qualifying_amount: int) -> int:
+        print('RUNNING FOR SAME PRODUCT')
+        updated_amount = amount_remaining
+
+        if updated_amount < 0:
+            raise ValueError(
+                f"Amount remaining cannot be negative: {amount_remaining}"
+            )
+        triggers_run = triggers
+        for _ in range(triggers):
+            print('inside forlooptriggers_run:', triggers_run)  # noqa
+            if updated_amount == 0:
+                print('Updated amount is 0, returning 0')
+                return 0
+            if triggers_run == 0:
+                print('No more triggers to run, returning updated amount:', updated_amount)
+                return updated_amount
+            if updated_amount <= qualifying_amount:
+                print('Updated amount is less than or equal to qualifying amount, returning updated amount:', updated_amount)
                 return updated_amount
             if updated_amount < free_item_amount:
                 print('Updated amount is less than free item amount, returning updated amount:', updated_amount)
@@ -219,4 +262,5 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
