@@ -134,17 +134,13 @@ class CheckoutSolution:
 
     def set_basket(self, skus: str) -> dict:
         items_dict = {}
-        print('skus', skus)
-
         for sku in self.unique_skus:
             items_dict[sku] = {
                 'sku': sku,
                 'count': skus.count(sku),
                 'price': BASIC_PRICES.get(sku)
             }
-        print('items_dict', items_dict)
         updated_basket = self._update_basket_with_free_items(items_dict)
-        print('updated_basket', updated_basket)
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -307,9 +303,7 @@ class CheckoutSolution:
 
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
         # if no discount, return the total price
-        print('no discount for', sku)
         price = BASIC_PRICES[sku]
-        print('basket', self.basket)
         if not count:
             count = self.basket[sku]['count']
         total = price * count
@@ -326,23 +320,16 @@ class CheckoutSolution:
     def calculate_with_group_discount(self, skus: list) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
-        print(f"Calculating group discount for SKUs: {skus}")
-        qualifying_skus = GROUP_DISCOUNT['qualifying_items']
+        qualifying_skus = skus
         qualifying_items_count = self.count_qualifying_items(qualifying_skus)
         if not qualifying_items_count:
-            print("No qualifying items for group discount.")
             return total
         if qualifying_items_count < GROUP_DISCOUNT['qualifying_amount']:
-            print('what is sku', skus)
-            print('type of sku', type(skus))
             reminder_total = 0
             for sku in qualifying_skus:
 
                 reminder_total += self.reminder_no_discount(sku)
-            print(f"Not enough qualifying items for group discount. "
-                  f"Total without discount: {reminder_total}")
             return total + reminder_total
-        print('where are you')
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
         total += trigger_count * GROUP_DISCOUNT['price']
@@ -396,11 +383,3 @@ class CheckoutSolution:
             total += product_total
 
         return total
-
-
-
-
-
-
-
-
