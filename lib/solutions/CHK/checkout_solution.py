@@ -101,13 +101,12 @@ FREE_ITEMS_PROMOTIONS = {
     }],
 }
 
-GROUP_DISCOUNTS = [
-    {
-        'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
-        'qualifying_amount': 3,
-        'price': 45,
-    },
-]
+GROUP_DISCOUNT = {
+    'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
+    'qualifying_amount': 3,
+    'price': 45,
+}
+
 
 
 class CheckoutSolution:
@@ -335,6 +334,7 @@ class CheckoutSolution:
     def calculate_with_group_discount(self, sku: str) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
+        best_groups = []
         for group in GROUP_DISCOUNTS:
             qualifying_items = group['qualifying_items']
             qualifying_items_count = self.count_qualifying_items(qualifying_items)
@@ -342,7 +342,8 @@ class CheckoutSolution:
                 continue
             if qualifying_items_count < group['qualifying_amount']:
                 continue
-            
+            trigger_count, remaining_items = divmod(
+                qualifying_items_count, group['qualifying_amount'])
 
 
     def calculate_total(self) -> int:
@@ -367,6 +368,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
