@@ -4,6 +4,7 @@ BASIC_PRICES = {
     'B': 30,
     'C': 20,
     'D': 15,
+    'E': 40,
 }
 
 SPECIAL_OFFERS = {
@@ -14,6 +15,10 @@ SPECIAL_OFFERS = {
     'B': {
         'amount': 2,
         'price': 45,
+    },
+    'E': {
+        'amount': 2,
+        'price': 40,
     },
 }
 
@@ -80,6 +85,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 
