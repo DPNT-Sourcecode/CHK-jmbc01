@@ -128,6 +128,7 @@ class CheckoutSolution:
             special_offer = special_offers[0]
             total_with_offer, remaining_count = self.one_special_offer(
                 sku, special_offer)
+
             remaining_total = self.reminder_no_discount(sku, remaining_count)
             total = total_with_offer + remaining_total
             print('calculate_with_special_offer:', total)
@@ -138,12 +139,13 @@ class CheckoutSolution:
             special_offers, key=lambda x: x['amount'], reverse=True)
         total = 0
         item_count = self.basket[sku]['count']
+        if item_count == 0:
+            return 0
         print('item count:', item_count)
         for offer in special_offers_sorted:
             print('offer:', offer)
-            if item_count == 0:
-                break
-            elif item_count < offer['amount']:
+            if item_count < offer['amount']:
+                print('not enough items for this offer:', offer)
                 continue
             else:
                 total_with_offer, reminder_items = self.one_special_offer(
@@ -163,7 +165,7 @@ class CheckoutSolution:
         print('offer count:', offer_count)
         print('remaining count:', reminder_items)
         total_with_offer = offer_count * special_offer['price']
-        print('total with offer:', total_with_offer)
+        print('total with offer, one_special_offer():', total_with_offer)
         already_calculated = product_count - reminder_items
         return total_with_offer, reminder_items
 
@@ -183,6 +185,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
