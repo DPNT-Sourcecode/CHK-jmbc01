@@ -77,8 +77,10 @@ class CheckoutSolution:
         is_in_special_offers = item['sku'] in SPECIAL_OFFERS
         if not is_in_special_offers:
             return False
-        amounts_qualifying = [offer['amount'] for offer in SPECIAL_OFFERS[item['sku']]]
-        amount_qualifies = any(item['count'] >= amount for amount in amounts_qualifying)
+        amounts_qualifying = [
+            offer['amount'] for offer in SPECIAL_OFFERS[item['sku']]]
+        amount_qualifies = any(
+            item['count'] >= amount for amount in amounts_qualifying)
         if not amount_qualifies:
             return False
         return True
@@ -102,9 +104,3 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
-
-
-
-
-
-
