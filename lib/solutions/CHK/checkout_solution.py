@@ -126,9 +126,10 @@ class CheckoutSolution:
         special_offers = SPECIAL_OFFERS[sku]
         if len(special_offers) == 1:
             special_offer = special_offers[0]
-            total_with_offer, remaining_count = self.one_special_offer(
+            total_with_offer, calculated = self.one_special_offer(
                 sku, special_offer)
-
+            remaining_count = self.basket[sku]['count'] - calculated
+            print('len(special_offers) == 1 remaining count after special offer:', remaining_count)
             remaining_total = self.reminder_no_discount(sku, remaining_count)
             total = total_with_offer + remaining_total
             print('calculate_with_special_offer:', total)
@@ -193,6 +194,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
