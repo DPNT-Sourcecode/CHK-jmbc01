@@ -337,12 +337,27 @@ class CheckoutSolution:
         # list products in decending order of price
         sorted_qualifying_skus = sorted(
             qualifying_skus, key=lambda x: BASIC_PRICES[x], reverse=False)
-        
+
         if remaining_items:
-            # find price for remaining items
+            items_to_calculate_count = remaining_items
+            total_for_remaining_items = 0
+            for sku in sorted_qualifying_skus:
+                if items_to_calculate_count <= 0:
+                    break
+                if sku not in self.basket:
+                    continue
+                item_count = self.basket[sku]['count']
+                if item_count <= items_to_calculate_count:
+                    total_for_remaining_items += (
+                        self.basket[sku]['price'] * item_count)
+                    items_to_calculate_count -= item_count
+                else:
+                    total_for_remaining_items += (
+                        self.basket[sku]['price'] * items_to_calculate_count)
+                    items_to_calculate_count = 0
 
-
-
+            total += total_for_remaining_items
+        return total
 
     def calculate_total(self) -> int:
         total = 0
@@ -366,4 +381,5 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
