@@ -88,6 +88,8 @@ class CheckoutSolution:
         total = 0
         item_count = item['count']
         for offer in special_offers_sorted:
+            if item_count == 0:
+                break
             if item_count >= offer['amount']:
                 total_with_offer, remaining_count = self.one_special_offer(item, offer)
                 item_count -= remaining_count
@@ -95,8 +97,8 @@ class CheckoutSolution:
             else:
                 # if the item count is less than the offer amount
                 total += self.reminder_no_discount(item)
-            if item_count == 0:
-                break
+            
+        print('total', total)
         return total
 
     def one_special_offer(self, item: dict, special_offer: dict) -> int:
@@ -120,3 +122,4 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+

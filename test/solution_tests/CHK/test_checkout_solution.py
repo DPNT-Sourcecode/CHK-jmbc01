@@ -11,7 +11,7 @@ class TestCheckout():
         assert CheckoutSolution().checkout("-") == -1
 
     def test_validate_each_sku(self):
-        assert CheckoutSolution().checkout("E") == -1
+        assert CheckoutSolution().checkout("Z") == -1
         assert CheckoutSolution().checkout("A1") == -1
 
     def test_calculate_total(self):
@@ -62,3 +62,4 @@ class TestCheckout():
         assert CheckoutSolution().checkout("EEB") == 40
 
     
+
