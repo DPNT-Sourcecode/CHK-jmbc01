@@ -6,8 +6,6 @@ BASIC_PRICES = {
     'D': 15,
     'E': 40,
     'F': 10,
-    'E': 20,
-    'F': 10,
     'G': 20,
     'H': 10,
     'I': 35,
@@ -333,12 +331,10 @@ class CheckoutSolution:
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
         total += trigger_count * GROUP_DISCOUNT['price']
-        # deduct items from the basket with lowest price, 
-        # list products in decending order of price
+        # sort qualifying skus by price ascending
         sorted_qualifying_skus = sorted(
             qualifying_skus,
-            key=lambda sku: BASIC_PRICES[sku],
-            reverse=True
+            key=lambda sku: BASIC_PRICES[sku]
         )
         print(f"Sorted qualifying SKUs: {sorted_qualifying_skus}")
         if remaining_items:
@@ -370,8 +366,6 @@ class CheckoutSolution:
         if skus_group_discount:
             total += self.calculate_with_group_discount(skus_group_discount)
 
-
-
         remaining_skus = [
             sku for sku in self.unique_skus if sku not in skus_group_discount]
 
@@ -384,3 +378,4 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
