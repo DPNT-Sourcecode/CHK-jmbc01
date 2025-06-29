@@ -81,19 +81,23 @@ class CheckoutSolution:
                 items_in_basket = updated_basket.get(
                     sku_free_item, {}).get('count', 0)
                 can_use_promotion = (
-                    items_in_basket < free_item_amount)
+                    items_in_basket > free_item_amount)
                 if not can_use_promotion:
+                    print('promotion cannot be used:', promotion)
                     continue
                 qualifying_amount = promotion['qualifying_amount']
                 actual_amount = item['count']
                 if actual_amount < qualifying_amount:
+                    print('not enough items to apply promotion:', promotion)
                     continue
                 how_many_times_promotion_applies, _ = divmod(
                     actual_amount, qualifying_amount)
                 free_items_to_deduct = (
                     how_many_times_promotion_applies * free_item_amount)
                 print('Deducting free items:', free_items_to_deduct, sku_free_item)
-                if sku_free_item in updated_basket:
+                print('updated_basket:', updated_basket)
+                if sku_free_item in updated_basket.keys():
+                    print('updating basket')
                     updated_basket[sku_free_item]['count'] -= free_items_to_deduct  # noqa
         return updated_basket
 
@@ -163,5 +167,6 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
