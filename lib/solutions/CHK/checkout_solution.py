@@ -90,8 +90,15 @@ class CheckoutSolution:
                 if actual_amount < qualifying_amount:
                     print('not enough items to apply promotion:', promotion)
                     continue
-                how_many_times_promotion_applies, _ = divmod(
-                    items_in_basket, qualifying_amount)
+                promotion_trigger_count, _ = divmod(
+                    actual_amount, qualifying_amount)
+                how_many_times_promotion_can_be_applied, _ = divmod(
+                    items_in_basket, free_item_amount
+                )
+                how_many_times_promotion_applies = min(
+                    promotion_trigger_count,
+                    how_many_times_promotion_can_be_applied
+                )
                 free_items_to_deduct = (
                     how_many_times_promotion_applies * free_item_amount)
                 print('Deducting free items:', free_items_to_deduct, sku_free_item)
@@ -167,6 +174,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
