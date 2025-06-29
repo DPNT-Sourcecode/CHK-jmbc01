@@ -101,6 +101,14 @@ FREE_ITEMS_PROMOTIONS = {
     }],
 }
 
+BUY_ANY_GROUP_OF_ITEMS = [
+    {
+        'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
+        'qualifying_amount': 3,
+        'price': 45,
+    },
+]
+
 
 class CheckoutSolution:
     basket: dict = {}
@@ -313,4 +321,3 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
-
