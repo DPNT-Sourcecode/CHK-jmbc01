@@ -82,3 +82,7 @@ class TestCheckout():
         assert CheckoutSolution().checkout("STYZ") == 45 + 20
         assert CheckoutSolution().checkout("STXYZ") == 45 + 17 + 20
 
+    def test_mix_group_and_special_offers(self):
+        assert CheckoutSolution().checkout("STXAAA") == 45 + 130
+
+
