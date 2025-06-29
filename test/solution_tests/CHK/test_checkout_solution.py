@@ -66,4 +66,11 @@ class TestCheckout():
         assert CheckoutSolution().checkout("EEEEBB") == 160
         assert CheckoutSolution().checkout("BEBEEE") == 160
 
+    def test_free_item_same_as_trigger(self):
+        assert CheckoutSolution().checkout("F") == 10
+        assert CheckoutSolution().checkout("FF") == 10
+        assert CheckoutSolution().checkout("FFF") == 20
+        assert CheckoutSolution().checkout("FFFF") == 10 + 10
+        assert CheckoutSolution().checkout("FFFFF") == 20 + 10
+
 
