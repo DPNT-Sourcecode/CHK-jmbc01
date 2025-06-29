@@ -19,6 +19,12 @@ class TestCheckout():
             CheckoutSolution().checkout("A1")
         assert str(e.value) == "Invalid SKU: 1"
 
+    def test_calculate_total(self):
+        assert CheckoutSolution().checkout("A") == 50
+        assert CheckoutSolution().checkout("B") == 30
+        assert CheckoutSolution().checkout("C") == 20
+        assert CheckoutSolution().checkout("AB") == 80
+
 
 
 
