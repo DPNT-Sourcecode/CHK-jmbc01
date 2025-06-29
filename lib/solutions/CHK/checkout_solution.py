@@ -77,7 +77,7 @@ class CheckoutSolution:
                 free_item_amount = promotion.get('free_item_amount', 0)
                 sku_free_item = promotion['free_item']
                 items_in_basket = basket.get(
-                    sku_free_item, 0)
+                    sku_free_item['count'], 0)
                 can_use_promotion = (
                     items_in_basket < free_item_amount)
                 if not can_use_promotion:
@@ -160,6 +160,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
