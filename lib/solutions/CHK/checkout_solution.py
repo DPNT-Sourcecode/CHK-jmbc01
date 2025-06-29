@@ -23,9 +23,9 @@ class CheckoutSolution:
     # skus = unicode string
     def checkout(self, skus: str) -> int:
         if not skus:
-            raise ValueError("Input cannot be empty")
+            return -1
         if not isinstance(skus, str):
-            raise TypeError("Input must be a string containing SKUs")
+            return -1
 
         validated_skus = [sku for sku in skus if self.validate_each_sku(sku)]
 
@@ -83,6 +83,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 
