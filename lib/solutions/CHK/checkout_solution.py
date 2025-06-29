@@ -128,40 +128,34 @@ class CheckoutSolution:
             if item['count'] < qualifying_amount:
                 continue
 
-            # how many free items per set
+            # how many items you get for free for set of qualifying items
             free_item_count = free_item['free_item_amount']
 
             # find the free item in sub_totals
             for sub_total in sub_totals:
                 if sub_total['sku'] == free_item_sku:
-                    print('free item sku', free_item_sku)
                     available_free_items = sub_total['count']
                     if available_free_items < free_item_count:
                         continue
                     # if multiple sets - need to calculate the remainder
                     sets_of_free_items, _ = divmod(
                         available_free_items, free_item_count)
-                    print('result of divmod:', sets_of_free_items, _)
-                    qualifying_amount = sets_of_free_items * qualifying_amount
-
-                    deduction += qualifying_amount * sub_total['price']
-                    print('Deduction for free items:', free_item_sku, deduction)
+                    qualifying_count = sets_of_free_items * free_item_count
+                    deduction += qualifying_count * sub_total['price']
                     break
         return deduction
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
         for item in sub_totals:
-            print('Calculating total for item:', item)
             if self.has_special_offer(item):
                 total += self.calculate_with_special_offer(item)
             else:
                 total += self.reminder_no_discount(item, item['count'])
-            print('total after item:', total)
         for item in sub_totals:
             total -= self.free_items_deduction(item, sub_totals)
-            print('Final total:', total)
 
         return total
+
 
 
