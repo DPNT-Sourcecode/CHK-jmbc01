@@ -22,8 +22,10 @@ class CheckoutSolution:
 
     # skus = unicode string
     def checkout(self, skus: str) -> int:
-        if not skus:
+        if skus == "":
             return 0
+        if not skus:
+            return -1
         if not isinstance(skus, str):
             return -1
 
@@ -78,6 +80,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 

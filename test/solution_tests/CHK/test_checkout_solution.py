@@ -4,9 +4,11 @@ from solutions.CHK.checkout_solution import CheckoutSolution
 
 class TestCheckout():
     def test_validate_parameter_skus(self):
-        assert CheckoutSolution().checkout("") == -1
+        assert CheckoutSolution().checkout("") == 0
         assert CheckoutSolution().checkout(None) == -1
         assert CheckoutSolution().checkout(123) == -1
+        assert CheckoutSolution().checkout("a") == -1
+        assert CheckoutSolution().checkout("-") == -1
 
     def test_validate_each_sku(self):
         assert CheckoutSolution().checkout("E") == -1
@@ -50,4 +52,6 @@ class TestCheckout():
             "AABBBCCDD") == 100 + 45 + 30 + 40 + 30
         assert CheckoutSolution().checkout(
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
+        assert CheckoutSolution().checkout("") == 0
+
 
