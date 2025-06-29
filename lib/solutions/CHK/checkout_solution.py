@@ -313,15 +313,6 @@ class CheckoutSolution:
 
         return total
 
-
-    def skus_group_discounts(self) -> list:
-        qualifying_items = []
-        for group in GROUP_DISCOUNTS:
-            qualifying_items.extend(group['qualifying_items'])
-        return qualifying_items
-
-
-
     def count_qualifying_items(self, qualifying_skus: list) -> int:
         count = 0
         for sku in qualifying_skus:
@@ -334,30 +325,29 @@ class CheckoutSolution:
     def calculate_with_group_discount(self, sku: str) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
-        best_groups = []
-        for group in GROUP_DISCOUNTS:
-            qualifying_items = group['qualifying_items']
-            qualifying_items_count = self.count_qualifying_items(qualifying_items)
-            if not qualifying_items_count:
-                continue
-            if qualifying_items_count < group['qualifying_amount']:
-                continue
-            trigger_count, remaining_items = divmod(
-                qualifying_items_count, group['qualifying_amount'])
+
+        qualifying_skus = GROUP_DISCOUNT['qualifying_items']
+        qualifying_items_count = self.count_qualifying_items(qualifying_skus)
+        if not qualifying_items_count:
+            continue
+        if qualifying_items_count < GROUP_DISCOUNT['qualifying_amount']:
+            continue
+        trigger_count, remaining_items = divmod(
+            qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
 
 
     def calculate_total(self) -> int:
         total = 0
-        skus_group_discounts = [
+        skus_group_discount = [
             sku for sku in self.unique_skus
-            if sku in self.skus_group_discounts()]
-        if skus_group_discounts:
-            total += self.calculate_with_group_discount(skus_group_discounts)
+            if sku in GROUP_DISCOUNT['qualifying_items']]
+        if skus_group_discount:
+            total += self.calculate_with_group_discount(skus_group_discount)
 
 
 
         remaining_skus = [
-            sku for sku in self.unique_skus if sku not in skus_group_discounts]
+            sku for sku in self.unique_skus if sku not in skus_group_discount]
 
         for sku in remaining_skus:
             product_total = 0
@@ -368,6 +358,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
