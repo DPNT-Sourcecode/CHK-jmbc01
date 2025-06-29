@@ -20,10 +20,14 @@ SPECIAL_OFFERS = {
 class CheckoutSolution:
 
     # skus = unicode string
-    def checkout(self, skus: list) -> int:
-        validated_skus = [is_validated_sku for is_validated_sku in skus if self.validate_skus(is_validated_sku)]
-        
-        # validate skus
+    def checkout(self, skus: str) -> int:
+        if not skus:
+            raise ValueError("Input cannot be empty")
+        if not isinstance(skus, list):
+            raise TypeError("Input must be a list of SKUs")
+
+        validated_skus = [sku for sku in skus if self.validate_skus(sku)]
+
         if not all(validated_skus):
             raise ValueError("Invalid SKUs provided.")
 
@@ -42,5 +46,6 @@ class CheckoutSolution:
 
     def calculate_total(self, skus: list) -> int:
         return sum(skus)
+
 
 
