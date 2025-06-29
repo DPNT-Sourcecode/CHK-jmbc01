@@ -46,7 +46,7 @@ class CheckoutSolution:
         if not all(validated_skus):
             return -1
         self.unique_skus = set(skus)
-        self.basket = self.set_basket()
+        self.basket = self.set_basket(skus)
         return self.calculate_total()
 
     def validate_each_sku(self, sku: str) -> bool:
@@ -56,13 +56,12 @@ class CheckoutSolution:
             return False
         return True
 
-    def set_basket(self) -> dict:
+    def set_basket(self, skus: str) -> dict:
         items_dict = {}
         for sku in self.unique_skus:
-            count = self.unique_skus.count(sku)
             items_dict[sku] = {
                 'sku': sku,
-                'count': count,
+                'count': skus.count(sku),
                 'price': BASIC_PRICES.get(sku)
             }
         updated_basket = self._update_basket_with_free_items(items_dict)
@@ -78,7 +77,7 @@ class CheckoutSolution:
                 free_item_amount = promotion.get('free_item_amount', 0)
                 sku_free_item = promotion['free_item']
                 items_in_basket = basket.get(
-                    sku_free_item, {'count': 0})
+                    sku_free_item, 0)
                 can_use_promotion = (
                     items_in_basket < free_item_amount)
                 if not can_use_promotion:
@@ -102,7 +101,8 @@ class CheckoutSolution:
         amounts_qualifying = [
             offer['amount'] for offer in SPECIAL_OFFERS[sku]]
 
-        amount_qualifies = any(self.basket[sku]['count'] >= amount for amount in amounts_qualifying)
+        amount_qualifies = any(
+            self.basket[sku]['count'] >= amount for amount in amounts_qualifying)  # noqa
         if not amount_qualifies:
             return False
         return True
@@ -160,6 +160,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
