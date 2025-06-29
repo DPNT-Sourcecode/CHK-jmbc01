@@ -332,6 +332,16 @@ class CheckoutSolution:
             return total
         trigger_count, remaining_items = divmod(
             qualifying_items_count, GROUP_DISCOUNT['qualifying_amount'])
+        total += trigger_count * GROUP_DISCOUNT['price']
+        # deduct items from the basket with lowest price, 
+        # list products in decending order of price
+        sorted_qualifying_skus = sorted(
+            qualifying_skus, key=lambda x: BASIC_PRICES[x], reverse=False)
+        
+        if remaining_items:
+            # find price for remaining items
+
+
 
 
     def calculate_total(self) -> int:
@@ -356,3 +366,4 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
