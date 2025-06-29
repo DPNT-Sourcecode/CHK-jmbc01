@@ -54,11 +54,12 @@ class TestCheckout():
         assert CheckoutSolution().checkout("EE") == 80
         assert CheckoutSolution().checkout("EB") == 70
 
-    @pytest.mark.skip(reason="work in progress")
+
     def test_multiple_discounts(self):
         assert CheckoutSolution().checkout("AAAAAAAA") == 330
         assert CheckoutSolution().checkout("AAAAAAAAA") == 380
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
 
