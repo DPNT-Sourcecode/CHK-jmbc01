@@ -101,6 +101,7 @@ class CheckoutSolution:
                     continue
                 promotion_trigger_count, _ = divmod(
                     actual_amount, qualifying_amount)
+                print(f"Promotion trigger count for {sku}: {promotion_trigger_count}")
                 reduced_amount = self._apply_reduction_rounds(
                     triggers=promotion_trigger_count,
                     amount_remaining=items_in_basket,
@@ -218,3 +219,4 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
