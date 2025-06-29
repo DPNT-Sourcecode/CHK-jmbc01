@@ -154,7 +154,3 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
-
-
-
-
