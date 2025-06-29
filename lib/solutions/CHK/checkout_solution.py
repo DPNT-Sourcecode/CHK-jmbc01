@@ -125,7 +125,7 @@ class CheckoutSolution:
                 continue
             else:
                 total_with_offer, remaining_count = self.one_special_offer(
-                    item, offer)
+                    sku, offer)
                 item_count = remaining_count
                 total += total_with_offer
         total += self.reminder_no_discount(sku, item_count)
@@ -156,6 +156,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
