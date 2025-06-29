@@ -113,7 +113,10 @@ class CheckoutSolution:
         return updated_basket
 
     def _apply_reduction_rounds(
-            self, *, triggers: int, amount_remaining: int, free_item_amount: int) -> int:
+            self, *,
+            triggers: int,
+            amount_remaining: int,
+            free_item_amount: int) -> int:
         updated_amount = amount_remaining
         triggers = triggers
         if updated_amount < 0:
@@ -210,6 +213,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
