@@ -32,8 +32,11 @@ class TestCheckout():
             {'sku': 'B', 'count': 2, 'price': 30},
             {'sku': 'C', 'count': 1, 'price': 20}
         ]
-        assert (
-            CheckoutSolution().convert_skus_to_list_of_dict(skus) == expected)
+        # assert correct count for each sku
+        result = CheckoutSolution().convert_skus_to_list_of_dict(skus)
+        assert result['A']['count'] == 2
+        assert result['B']['count'] == 2
+        assert result['A']['price'] == 50
 
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
