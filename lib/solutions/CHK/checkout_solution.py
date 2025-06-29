@@ -27,15 +27,18 @@ class CheckoutSolution:
         if not isinstance(skus, str):
             return -1
 
+        validated_skus = [sku for sku in skus if self.validate_each_sku(sku)]
+
+        if not all(validated_skus):
+            return -1
         sub_totals = self.convert_skus_to_list_of_dict(skus)
         return self.calculate_total(sub_totals)
 
-    # todo remove this
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
-            raise TypeError("Input must be a string")
+            return False
         if sku not in BASIC_PRICES:
-            raise ValueError(f"Invalid SKU: {sku}")
+            return False
         return True
 
     def convert_skus_to_list_of_dict(self, skus: str) -> list:
@@ -43,7 +46,7 @@ class CheckoutSolution:
             {
                 'sku': sku,
                 'count': skus.count(sku),
-                'price': BASIC_PRICES.get(sku, -1)
+                'price': BASIC_PRICES.get(sku)
             } for sku in set(skus)
         ]
 
@@ -77,6 +80,8 @@ class CheckoutSolution:
             if self.has_special_offer(item):
                 total += self.calculate_with_special_offer(item)
             else:
+                print('no special offer for:', item)
                 total += item['price'] * item['count']
 
         return total
+

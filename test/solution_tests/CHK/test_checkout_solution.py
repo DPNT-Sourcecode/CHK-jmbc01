@@ -1,4 +1,4 @@
-import pytest
+
 from solutions.CHK.checkout_solution import CheckoutSolution
 
 
@@ -9,12 +9,8 @@ class TestCheckout():
         assert CheckoutSolution().checkout(123) == -1
 
     def test_validate_each_sku(self):
-        with pytest.raises(ValueError) as e:
-            CheckoutSolution().checkout("E")
-        assert str(e.value) == "Invalid SKU: E"
-        with pytest.raises(ValueError) as e:
-            CheckoutSolution().checkout("A1")
-        assert str(e.value) == "Invalid SKU: 1"
+        assert CheckoutSolution().checkout("E") == -1
+        assert CheckoutSolution().checkout("A1") == -1
 
     def test_calculate_total(self):
         assert CheckoutSolution().checkout("A") == 50
@@ -54,3 +50,4 @@ class TestCheckout():
             "AABBBCCDD") == 100 + 45 + 30 + 40 + 30
         assert CheckoutSolution().checkout(
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
+
