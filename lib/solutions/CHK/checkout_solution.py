@@ -6,13 +6,13 @@ BASIC_PRICES = {
     'D': 15,
     'E': 40,
     'F': 10,
-    'E': 40,
+    'E': 20,
     'F': 10,
     'G': 20,
     'H': 10,
     'I': 35,
     'J': 60,
-    'K': 80,
+    'K': 70,
     'L': 90,
     'M': 15,
     'N': 40,
@@ -25,9 +25,9 @@ BASIC_PRICES = {
     'U': 40,
     'V': 50,
     'W': 20,
-    'X': 90,
-    'Y': 10,
-    'Z': 50,
+    'X': 17,
+    'Y': 20,
+    'Z': 21,
 }
 
 SPECIAL_OFFERS = {
@@ -384,7 +384,3 @@ class CheckoutSolution:
             total += product_total
 
         return total
-
-
-
-
