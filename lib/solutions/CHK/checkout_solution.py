@@ -17,6 +17,7 @@ SPECIAL_OFFERS = {
     },
 }
 
+
 class CheckoutSolution:
 
     # skus = unicode string
@@ -26,7 +27,7 @@ class CheckoutSolution:
         if not isinstance(skus, str):
             raise TypeError("Input must be a string containing SKUs")
 
-        validated_skus = [sku for sku in skus if self.validate_skus(sku)]
+        validated_skus = [sku for sku in skus if self.validate_each_sku(sku)]
 
         if not all(validated_skus):
             raise ValueError("Invalid SKUs provided.")
@@ -45,6 +46,7 @@ class CheckoutSolution:
 
     def calculate_total(self, skus: str) -> int:
         return sum(BASIC_PRICES[sku] for sku in skus)
+
 
 
 
