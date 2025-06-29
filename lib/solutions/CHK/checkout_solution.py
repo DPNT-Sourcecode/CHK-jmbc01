@@ -134,15 +134,18 @@ class CheckoutSolution:
             # find the free item in sub_totals
             for sub_total in sub_totals:
                 if sub_total['sku'] == free_item_sku:
+                    print('free item sku', free_item_sku)
                     available_free_items = sub_total['count']
                     if available_free_items < free_item_count:
                         continue
                     # if multiple sets - need to calculate the remainder
                     sets_of_free_items, _ = divmod(
                         available_free_items, free_item_count)
+                    print('result of divmod:', sets_of_free_items, _)
                     qualifying_amount = sets_of_free_items * qualifying_amount
 
                     deduction += qualifying_amount * sub_total['price']
+                    print('Deduction for free items:', free_item_sku, deduction)
                     break
         return deduction
 
@@ -160,4 +163,5 @@ class CheckoutSolution:
             print('Final total:', total)
 
         return total
+
 
