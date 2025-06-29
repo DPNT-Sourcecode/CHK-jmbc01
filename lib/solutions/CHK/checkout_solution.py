@@ -106,7 +106,6 @@ GROUP_DISCOUNT = {
 }
 
 
-
 class CheckoutSolution:
     basket: dict = {}
     unique_skus: set = set()
@@ -135,13 +134,17 @@ class CheckoutSolution:
 
     def set_basket(self, skus: str) -> dict:
         items_dict = {}
+        print('skus', skus)
+
         for sku in self.unique_skus:
             items_dict[sku] = {
                 'sku': sku,
                 'count': skus.count(sku),
                 'price': BASIC_PRICES.get(sku)
             }
+        print('items_dict', items_dict)
         updated_basket = self._update_basket_with_free_items(items_dict)
+        print('updated_basket', updated_basket)
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -306,6 +309,7 @@ class CheckoutSolution:
         # if no discount, return the total price
         print('no discount for', sku)
         price = BASIC_PRICES[sku]
+        print('basket', self.basket)
         if not count:
             count = self.basket[sku]['count']
         total = price * count
@@ -352,6 +356,8 @@ class CheckoutSolution:
             print(f"Remaining items to calculate: {remaining_items}")
             items_to_calculate_count = remaining_items
             total_for_remaining_items = 0
+            print(self.basket)
+            print('basket', self.basket)
             for sku in sorted_qualifying_skus:
                 if items_to_calculate_count <= 0:
                     break
@@ -390,6 +396,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
