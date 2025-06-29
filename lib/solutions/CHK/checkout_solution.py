@@ -80,13 +80,9 @@ class CheckoutSolution:
                 sku_free_item = promotion['free_item']
                 items_in_basket = updated_basket.get(
                     sku_free_item, {}).get('count', 0)
-                has_enough_items_in_basket_to_apply_promotion = (
-                    items_in_basket > free_item_amount)
-                print('items_in_basket:', items_in_basket,
-                      'free_item_amount:', free_item_amount,
-                      'has_enough_items_in_basket_to_apply_promotion:',
-                      has_enough_items_in_basket_to_apply_promotion)
-                if not has_enough_items_in_basket_to_apply_promotion:
+                not_enough_in_basket_to_apply_promotion = (
+                    items_in_basket < free_item_amount)
+                if not_enough_in_basket_to_apply_promotion:
                     print('promotion cannot be used:', promotion)
                     continue
                 qualifying_amount = promotion['qualifying_amount']
@@ -171,6 +167,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
