@@ -4,7 +4,14 @@ import pytest
 
 class TestHello():
     def test_hello(self):
-        assert HelloSolution().hello("Alice") == "Hello, World!"
+        assert 'Hello,' in HelloSolution().hello("Alice")
+
+    def test_hello_with_name(self):
+        assert HelloSolution().hello("Bob") == "Hello, Bob!"
+
+    def test_hello_with_special_characters(self):
+        with pytest.raises(UnicodeDecodeError):
+            HelloSolution().hello("Ã© Ã")
 
     def test_empty_string(self):
         with pytest.raises(ValueError):
@@ -13,5 +20,6 @@ class TestHello():
     def test_string(self):
         with pytest.raises(TypeError):
             HelloSolution().hello(123)
+
 
 
