@@ -53,8 +53,11 @@ class TestCheckout():
         assert CheckoutSolution().checkout("AAABBB") == 130 + 45 + 30
         assert CheckoutSolution().checkout("AABBC") == 100 + 45 + 20
         assert CheckoutSolution().checkout("AABBBCC") == 100 + 45 + 30 + 40
-        assert CheckoutSolution().checkout("AABBBCCDD") == 100 + 45 + 30 + 40 + 30
-        assert CheckoutSolution().checkout("AABBBCCDDDD") == 175 + 15 + 15
+        assert CheckoutSolution().checkout(
+            "AABBBCCDD") == 100 + 45 + 30 + 40 + 30
+        assert CheckoutSolution().checkout(
+            "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
+
 
 
 
