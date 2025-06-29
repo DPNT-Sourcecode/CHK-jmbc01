@@ -84,7 +84,9 @@ class CheckoutSolution:
             total_with_offer, remaining_count = self.one_special_offer(
                 item, special_offer)
             remaining_total = self.reminder_no_discount(item, remaining_count)
-            return total_with_offer + remaining_total
+            total = total_with_offer + remaining_total
+            print('total with one offer')
+            return total
 
         # order special offers by amount descending
         special_offers_sorted = sorted(special_offers, key=lambda x: x['amount'], reverse=True)
@@ -133,8 +135,9 @@ class CheckoutSolution:
         for item in sub_totals:
             print('LOOPING ITEM', item)
             if self.has_special_offer(item):
-                total += self.calculate_with_special_offer(item)
+                total = self.calculate_with_special_offer(item)
             else:
-                total += item['price'] * item['count']
+                total = item['price'] * item['count']
 
         return total
+
