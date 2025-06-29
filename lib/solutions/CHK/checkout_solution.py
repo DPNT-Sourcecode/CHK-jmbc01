@@ -46,7 +46,7 @@ SPECIAL_OFFERS = {
         'amount': 5,
         'price': 45,
     },
-    {
+        {
         'amount': 10,
         'price': 80,
     }],
@@ -66,7 +66,7 @@ SPECIAL_OFFERS = {
         'amount': 2,
         'price': 90,
     },
-    {
+        {
         'amount': 3,
         'price': 130,
     }],
@@ -255,6 +255,7 @@ class CheckoutSolution:
             self.basket[sku]['count'] >= amount for amount in amounts_qualifying)  # noqa
         if not amount_qualifies:
             return False
+        
         return True
 
     def calculate_with_special_offer(self, sku: str) -> int:
@@ -321,3 +322,4 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
