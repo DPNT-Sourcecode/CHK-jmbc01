@@ -23,8 +23,8 @@ class CheckoutSolution:
     def checkout(self, skus: str) -> int:
         if not skus:
             raise ValueError("Input cannot be empty")
-        if not isinstance(skus, list):
-            raise TypeError("Input must be a list of SKUs")
+        if not isinstance(skus, str):
+            raise TypeError("Input must be a string of SKUs")
 
         validated_skus = [sku for sku in skus if self.validate_skus(sku)]
 
@@ -46,6 +46,7 @@ class CheckoutSolution:
 
     def calculate_total(self, skus: list) -> int:
         return sum(skus)
+
 
 
 
