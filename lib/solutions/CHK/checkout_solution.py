@@ -179,10 +179,11 @@ class CheckoutSolution:
         total = 0
         for sku in self.unique_skus:
             if self.has_special_offer(sku):
-                return self.calculate_with_special_offer(sku)
+                total += self.calculate_with_special_offer(sku)
             else:
-                return self.reminder_no_discount(sku)
+                total += self.reminder_no_discount(sku)
         return total
+
 
 
 
