@@ -314,17 +314,22 @@ class CheckoutSolution:
 
         return total
 
-    def has_group_discount(self, sku: str) -> bool:
+    def basket_has_group_discount(self) -> bool:
         triggers_skus = []
         for group in GROUP_DISCOUNTS:
             triggers_skus.extend(group['qualifying_items'])
-        return sku in triggers_skus
+        return any(
+            sku in self.unique_skus for sku in triggers_skus
+        )
+
+    # def count_qualifying_items(self) -> int:
+
 
 
     def calculate_with_group_discount(self, sku: str) -> int:
-        # for each group discount, find the amopunts of items eligible for trigger
+        # for each group discount, find the count of items eligible for trigger
         total = 0
-        for group in GROUP_DISCOUNTS:
+        # for group in GROUP_DISCOUNTS:
 
     def calculate_total(self) -> int:
         total = 0
@@ -334,7 +339,10 @@ class CheckoutSolution:
                 product_total += self.calculate_with_special_offer(sku)
             else:
                 product_total += self.reminder_no_discount(sku)
-            if self.has_group_discount(sku):
-                product_total += self.calculate_with_group_discount(sku)
             total += product_total
+        # outside the loop, check for group discounts
+        if not self.basket_has_group_discount():
+            return total
+        
         return total
+
