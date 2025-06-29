@@ -338,6 +338,7 @@ class CheckoutSolution:
         )
         print(f"Sorted qualifying SKUs: {sorted_qualifying_skus}")
         if remaining_items:
+            print(f"Remaining items to calculate: {remaining_items}")
             items_to_calculate_count = remaining_items
             total_for_remaining_items = 0
             for sku in sorted_qualifying_skus:
@@ -378,4 +379,5 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
