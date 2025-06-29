@@ -101,9 +101,9 @@ class CheckoutSolution:
                     continue
                 promotion_trigger_count, _ = divmod(
                     actual_amount, qualifying_amount)
-                how_many_times_promotion_can_be_applied, _ = divmod(
-                    items_in_basket, free_item_amount
-                )
+                # how_many_times_promotion_can_be_applied, _ = divmod(
+                #     items_in_basket, free_item_amount
+                # )
                 # how_many_times_promotion_applies = min(
                 #     promotion_trigger_count,
                 #     how_many_times_promotion_can_be_applied
@@ -111,17 +111,18 @@ class CheckoutSolution:
                 # free_items_to_deduct = (
                 #     how_many_times_promotion_applies * free_item_amount)
                 reduced_amount = self._apply_reduction_rounds(
-                    promotion_trigger_count,
-                    items_in_basket,
-                    free_item_amount
+                    triggers=promotion_trigger_count,
+                    amount_remaining=items_in_basket,
+                    qualifying_amount=qualifying_amount
                 )
+                print(f"Reduced amount for {sku_free_item}: {reduced_amount}")  # noqa
                 if sku_free_item in updated_basket.keys():
-                    updated_basket[sku_free_item]['count'] -= free_items_to_deduct  # noqa
+                    updated_basket[sku_free_item]['count'] = reduced_amount  # noqa
 
         return updated_basket
 
     def _apply_reduction_rounds(
-            self, triggers: int, amount_remaining: int, qualifying_amount: int) -> int:
+            self, *, triggers: int, amount_remaining: int, qualifying_amount: int) -> int:
         updated_amount = amount_remaining
         triggers = triggers
         if updated_amount < 0:
@@ -218,5 +219,6 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
