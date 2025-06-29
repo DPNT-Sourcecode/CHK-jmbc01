@@ -98,7 +98,10 @@ class CheckoutSolution:
             else:
                 print('item count', item_count, 'offer amount', offer['amount'])
                 total_with_offer, remaining_count = self.one_special_offer(item, offer)
-                item_count -= remaining_count
+                print('item_count before offer', item_count)
+                print(remaining_count, 'remaining count after offer')
+                item_count = remaining_count
+                print('item count after offer', item_count)
                 total += total_with_offer
                 print('total inside loop', total, 'remaining count', remaining_count)
         print('total before reminder', total)
@@ -131,6 +134,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 
