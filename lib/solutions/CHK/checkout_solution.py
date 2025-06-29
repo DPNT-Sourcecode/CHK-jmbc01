@@ -43,7 +43,7 @@ class CheckoutSolution:
         validated_skus = [self.validate_each_sku(sku) for sku in skus]
         if not all(validated_skus):
             return -1
-        sub_totals = self.convert_skus_to_list_of_dict(skus)
+        sub_totals = self.convert_skus_to_dict(skus)
         sub_totals_reduced = self.update_totals_with_free_items(sub_totals)
         return self.calculate_total(sub_totals_reduced)
 
@@ -54,14 +54,16 @@ class CheckoutSolution:
             return False
         return True
 
-    def convert_skus_to_list_of_dict(self, skus: str) -> list:
-        return [
-            {
-                'sku': sku,
+    def convert_skus_to_dict(self, skus: str) -> dict:
+        unique_skus = set(skus)
+        items_dict = {}
+        for sku in unique_skus:
+            items_dict[sku] = {
                 'count': skus.count(sku),
                 'price': BASIC_PRICES.get(sku)
-            } for sku in set(skus)
-        ]
+            }
+        return items_dict
+
 
     def has_special_offer(self, item: dict) -> bool:
         is_in_special_offers = item['sku'] in SPECIAL_OFFERS
@@ -171,6 +173,7 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
 
 
 

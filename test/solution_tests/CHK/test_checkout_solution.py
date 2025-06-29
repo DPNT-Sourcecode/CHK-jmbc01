@@ -22,18 +22,16 @@ class TestCheckout():
 
     def test_convert_skus_to_list_of_dict(self):
         skus = "AABBC"
-        expected = [
-            {'sku': 'A', 'count': 2, 'price': 50},
-            {'sku': 'B', 'count': 2, 'price': 30},
-            {'sku': 'C', 'count': 1, 'price': 20}
-        ]
+        expected = {
+            'A': {'count': 2, 'price': 50},
+            'B': {'count': 2, 'price': 30},
+            'C': {'count': 1, 'price': 20}
+        }
         # assert correct count for each sku
-        result = CheckoutSolution().convert_skus_to_list_of_dict(skus)
-        # order of items will be different
-        # because we got the set of skus before we created a list
-        assert len(result) == len(expected)
-        for item in expected:
-            assert item in result, f"Expected {item} not found in result"
+        result = CheckoutSolution().convert_skus_to_dict(skus)
+        assert expected['A']['count'] == result['A']['count']
+        assert expected['B']['count'] == result['B']['count']
+        assert expected['C']['count'] == result['C']['count']
 
     def test_has_special_offer(self):
         assert CheckoutSolution().has_special_offer(
@@ -82,3 +80,4 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
