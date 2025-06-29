@@ -50,7 +50,7 @@ SPECIAL_OFFERS = {
     }],
     'K': [{
         'amount': 2,
-        'price': 150,
+        'price': 120,
     }],
     'P': [{
         'amount': 5,
@@ -379,6 +379,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
