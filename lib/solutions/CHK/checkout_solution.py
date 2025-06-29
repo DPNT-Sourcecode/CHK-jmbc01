@@ -52,6 +52,15 @@ class CheckoutSolution:
             raise ValueError(f"Invalid SKU: {sku}")
         return True
 
+    def convert_skus_to_list_of_dict(self, skus: str) -> list:
+        return [
+            {
+                'sku': sku,
+                'count': skus.count(sku),
+                'price': BASIC_PRICES[sku],
+            } for sku in set(skus)
+        ]
+
     def has_special_offer(self, item: dict) -> bool:
         is_in_special_offers = item['sku'] in SPECIAL_OFFERS
         amount_qualifying = SPECIAL_OFFERS[item['sku']]['amount']
@@ -76,6 +85,7 @@ class CheckoutSolution:
             total += item['price'] * item['count']
 
         return total
+
 
 
 
