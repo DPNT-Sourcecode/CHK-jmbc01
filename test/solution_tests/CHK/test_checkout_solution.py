@@ -55,4 +55,3 @@ class TestCheckout():
         assert CheckoutSolution().checkout("") == 0
 
 
-

@@ -130,6 +130,3 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
-
-
-
