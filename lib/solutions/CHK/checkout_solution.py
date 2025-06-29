@@ -336,7 +336,10 @@ class CheckoutSolution:
         # deduct items from the basket with lowest price, 
         # list products in decending order of price
         sorted_qualifying_skus = sorted(
-            qualifying_skus, key=lambda x: BASIC_PRICES[x], reverse=True)
+            qualifying_skus,
+            key=lambda sku: BASIC_PRICES[sku],
+            reverse=True
+        )
         print(f"Sorted qualifying SKUs: {sorted_qualifying_skus}")
         if remaining_items:
             items_to_calculate_count = remaining_items
@@ -381,6 +384,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
