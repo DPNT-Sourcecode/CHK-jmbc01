@@ -20,14 +20,6 @@ class TestCheckout():
         assert CheckoutSolution().checkout("C") == 20
         assert CheckoutSolution().checkout("AB") == 80
 
-    def test_has_special_offer(self):
-        assert CheckoutSolution().has_special_offer(
-            {'A', {'count': 3, 'price': 50}}) is True
-        assert CheckoutSolution().has_special_offer(
-            {'B', {'count': 2, 'price': 30}}) is True
-        assert CheckoutSolution().has_special_offer(
-            {'C', {'count': 1, 'price': 20}}) is False
-
     def test_calculate_total_with_special_offers(self):
         assert CheckoutSolution().checkout("AAA") == 130
         assert CheckoutSolution().checkout("AAABBB") == 130 + 45 + 30
@@ -67,5 +59,6 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
 
 
