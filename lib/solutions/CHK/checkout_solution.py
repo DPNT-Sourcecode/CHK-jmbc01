@@ -338,13 +338,9 @@ class CheckoutSolution:
             qualifying_skus,
             key=lambda sku: BASIC_PRICES[sku]
         )
-        print(f"Sorted qualifying SKUs: {sorted_qualifying_skus}")
         if remaining_items:
-            print(f"Remaining items to calculate: {remaining_items}")
             items_to_calculate_count = remaining_items
             total_for_remaining_items = 0
-            print(self.basket)
-            print('basket', self.basket)
             for sku in sorted_qualifying_skus:
                 if items_to_calculate_count <= 0:
                     break
@@ -383,3 +379,4 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
