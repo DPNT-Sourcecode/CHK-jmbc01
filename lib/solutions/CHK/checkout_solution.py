@@ -255,7 +255,10 @@ class CheckoutSolution:
             self.basket[sku]['count'] >= amount for amount in amounts_qualifying)  # noqa
         if not amount_qualifies:
             return False
-        
+        group_promotions_items = [
+            offer['qualifying_items'] for offer in BUY_ANY_GROUP_OF_ITEMS]
+        if sku not in group_promotions_items:
+            return False
         return True
 
     def calculate_with_special_offer(self, sku: str) -> int:
@@ -322,4 +325,5 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
