@@ -54,9 +54,3 @@ class TestCheckout():
             "AABBBCCDD") == 100 + 45 + 30 + 40 + 30
         assert CheckoutSolution().checkout(
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
-
-
-
-
-
-

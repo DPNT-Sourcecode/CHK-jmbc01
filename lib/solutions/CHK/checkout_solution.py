@@ -27,13 +27,10 @@ class CheckoutSolution:
         if not isinstance(skus, str):
             return -1
 
-        validated_skus = [sku for sku in skus if self.validate_each_sku(sku)]
-
-        if not all(validated_skus):
-            raise ValueError("Invalid SKUs provided.")
         sub_totals = self.convert_skus_to_list_of_dict(skus)
         return self.calculate_total(sub_totals)
 
+    # todo remove this
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
             raise TypeError("Input must be a string")
@@ -83,8 +80,3 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
-
-
-
-
-
