@@ -7,7 +7,7 @@ BASIC_PRICES = {
     'E': 40,
 }
 
-SPECIAL_OFFERS = {
+SPECIAL_OFFERS_OLD = {
     'A': {
         'amount': 3,
         'price': 130,
@@ -22,6 +22,23 @@ SPECIAL_OFFERS = {
     },
 }
 
+SPECIAL_OFFERS = {
+    'A': [{
+        'amount': 3,
+        'price': 130,
+    }, {
+        'amount': 5,
+        'price': 200,
+    }],
+    'B': [{
+        'amount': 2,
+        'price': 45,
+    }],
+    'E': [{
+        'amount': 2,
+        'price': 40,
+    }],
+}
 
 class CheckoutSolution:
 
@@ -60,8 +77,8 @@ class CheckoutSolution:
         is_in_special_offers = item['sku'] in SPECIAL_OFFERS
         if not is_in_special_offers:
             return False
-        amount_qualifying = SPECIAL_OFFERS[item['sku']]['amount']
-        amount_qualifies = item['count'] >= amount_qualifying
+        amounts_qualifying = [offer['amount'] for offer in SPECIAL_OFFERS[item['sku']]]
+        amount_qualifies = any(item['count'] >= amount for amount in amounts_qualifying)
         if not amount_qualifies:
             return False
         return True
@@ -85,6 +102,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 
