@@ -138,7 +138,8 @@ class CheckoutSolution:
                         print(f'Not enough free items {free_item_sku} available: {available_free_items}, needed: {free_item_count}')
                         continue
                     # if multiple sets - need to calculate the remainder
-                    qualifying_count 
+                    qualifying_count_set = sets_of_qualifying_items * free_item_count
+                    actual_free_items = available_free_items // free_item_count
                     deduction += sets_of_qualifying_items * free_item_count * sub_total['price']
                     break
         print('Free items deduction:', deduction)
@@ -158,6 +159,3 @@ class CheckoutSolution:
             print('Final total:', total)
 
         return total
-
-
-

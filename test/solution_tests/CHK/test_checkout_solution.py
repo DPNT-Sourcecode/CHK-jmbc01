@@ -74,4 +74,3 @@ class TestCheckout():
         assert CheckoutSolution().checkout("B") == 30
         assert CheckoutSolution().checkout("EE") == 80
         assert CheckoutSolution().checkout("EB") == 70
-
