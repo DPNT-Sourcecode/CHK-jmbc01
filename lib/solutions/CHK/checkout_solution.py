@@ -159,6 +159,7 @@ class CheckoutSolution:
             qualifying_amount: int) -> int:
         print('RUNNING FOR SAME PRODUCT')
         updated_amount = amount_remaining
+        processed_for_promotion = amount_remaining
 
         if updated_amount < 0:
             raise ValueError(
@@ -173,13 +174,14 @@ class CheckoutSolution:
             if triggers_run == 0:
                 print('No more triggers to run, returning updated amount:', updated_amount)
                 return updated_amount
-            if updated_amount <= qualifying_amount:
+            if processed_for_promotion <= qualifying_amount:
                 print('Updated amount is less than or equal to qualifying amount, returning updated amount:', updated_amount)
                 return updated_amount
             if updated_amount < free_item_amount:
                 print('Updated amount is less than free item amount, returning updated amount:', updated_amount)
                 return updated_amount
             updated_amount -= free_item_amount
+            processed_for_promotion -= qualifying_amount
             print(f"Updated amount after reduction: {updated_amount}")
             triggers_run -= 1
         print('triggers_run:', triggers_run)  # noqa
@@ -262,5 +264,6 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
