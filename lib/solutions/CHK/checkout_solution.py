@@ -21,7 +21,7 @@ SPECIAL_OFFERS = {
     }],
 }
 
-FREE_ITEMS = {
+FREE_ITEMS_PROMOTIONS = {
     'E': [{
         'qualifying_amount': 2,
         'free_item': 'B',
@@ -47,8 +47,7 @@ class CheckoutSolution:
             return -1
         self.unique_skus = set(skus)
         self.basket = self.set_basket()
-        basket_reduced = self.update_totals_with_free_items(basket)
-        return self.calculate_total(basket_reduced)
+        return self.calculate_total()
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -71,19 +70,24 @@ class CheckoutSolution:
 
     def _update_basket_with_free_items(self, basket) -> dict:
         updated_basket = basket.copy()
-        for items in self.unique_skus:
-            if items['sku'] not in FREE_ITEMS:
+        for sku, item in basket.items():
+            if sku not in FREE_ITEMS_PROMOTIONS:
                 continue
-            free_item_promotions = FREE_ITEMS[items['sku']]
+            free_item_promotions = FREE_ITEMS_PROMOTIONS[sku]
             for promotion in free_item_promotions:
                 sku_item_to_get_for_free = promotion['free_item']
-                qualifying_amount = promotion['qualifying_amount']
-                item_qualifier = items
-                if item_qualifier['count'] < qualifying_amount:
+                items_in_basket = basket.get(sku_item_to_get_for_free, {'count': 0})
+                can_use_promotion = items_in_basket < promotion['free_item_amount']
+                if not can_use_promotion:
                     continue
-                # find the free item in basket
+                qualifying_amount = promotion['qualifying_amount']
+                actual_amount = item['count']
+                if actual_amount < qualifying_amount:
+                    continue
+                how_many_times_promotion_applies, _ = divmod(actual_amount, qualifying_amount)
+                free_items_to_deduct = how_many_times_promotion_applies * promotion['free_item_amount']
                 if sku_item_to_get_for_free in updated_basket:
-                    updated_basket[sku_item_to_get_for_free]['count'] += 1
+                    updated_basket[sku_item_to_get_for_free]['count'] -= free_items_to_deduct
         return updated_basket
 
     def has_special_offer(self, sku: str) -> bool:
@@ -140,49 +144,6 @@ class CheckoutSolution:
         return item['price'] * count
 
 
-    def update_totals_with_free_items(self, sub_totals: list) -> list:
-        # todo finish this
-        result = sub_totals.copy()
-        for item in sub_totals:
-            if item['sku'] not in FREE_ITEMS:
-                continue
-            free_item_promotions = FREE_ITEMS[item['sku']]
-            for promotion in free_item_promotions:
-                sku_item_to_get_for_free = promotion['free_item']
-                qualifying_amount = promotion['qualifying_amount']
-                item_qualifier = item
-        return result
-
-
-
-    def free_items_deduction(self, item: dict, sub_totals: list) -> int:
-        if item['sku'] not in FREE_ITEMS:
-            return 0
-        free_items = FREE_ITEMS[item['sku']]
-        deduction = 0
-        for free_item in free_items:
-            free_item_sku = free_item['free_item']
-            qualifying_amount = free_item['qualifying_amount']
-            if item['count'] < qualifying_amount:
-                continue
-
-            # how many items you get for free for set of qualifying items
-            free_item_count = free_item['free_item_amount']
-
-            # find the free item in sub_totals
-            for sub_total in sub_totals:
-                if sub_total['sku'] == free_item_sku:
-                    available_free_items = sub_total['count']
-                    if available_free_items < free_item_count:
-                        continue
-                    # if multiple sets - need to calculate the remainder
-                    sets_of_free_items, _ = divmod(
-                        available_free_items, free_item_count)
-                    qualifying_count = sets_of_free_items * free_item_count
-                    deduction += qualifying_count * sub_total['price']
-                    break
-        return deduction
-
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
         for sku in self.unique_skus:
@@ -192,3 +153,4 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
