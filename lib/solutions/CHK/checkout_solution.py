@@ -323,14 +323,27 @@ class CheckoutSolution:
 
 
 
-    # def count_qualifying_items(self) -> int:
+    def count_qualifying_items(self, qualifying_skus: list) -> int:
+        count = 0
+        for sku in qualifying_skus:
+            if sku in self.basket:
+                count += self.basket[sku]['count']
+        return count
 
 
 
     def calculate_with_group_discount(self, sku: str) -> int:
         # for each group discount, find the count of items eligible for trigger
         total = 0
-        # for group in GROUP_DISCOUNTS:
+        for group in GROUP_DISCOUNTS:
+            qualifying_items = group['qualifying_items']
+            qualifying_items_count = self.count_qualifying_items(qualifying_items)
+            if not qualifying_items_count:
+                continue
+            if qualifying_items_count < group['qualifying_amount']:
+                continue
+            
+
 
     def calculate_total(self) -> int:
         total = 0
@@ -354,6 +367,7 @@ class CheckoutSolution:
             total += product_total
 
         return total
+
 
 
 
