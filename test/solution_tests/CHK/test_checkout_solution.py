@@ -22,6 +22,7 @@ class TestCheckout():
 
     def test_set_basket(self):
         skus = "AABBC"
+        CheckoutSolution().checkout(skus)
         expected = {
             'A': {'count': 2, 'price': 50},
             'B': {'count': 2, 'price': 30},
@@ -80,3 +81,4 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
+
