@@ -44,7 +44,8 @@ class CheckoutSolution:
         if not all(validated_skus):
             return -1
         sub_totals = self.convert_skus_to_list_of_dict(skus)
-        return self.calculate_total(sub_totals)
+        sub_totals_reduced = self.apply_free_item_offers(sub_totals)
+        return self.calculate_total(sub_totals_reduced)
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -154,3 +155,4 @@ class CheckoutSolution:
             total -= self.free_items_deduction(item, sub_totals)
 
         return total
+
