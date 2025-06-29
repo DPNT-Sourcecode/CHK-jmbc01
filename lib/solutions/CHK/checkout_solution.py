@@ -145,10 +145,10 @@ class CheckoutSolution:
             elif item_count < offer['amount']:
                 continue
             else:
-                total_with_offer, remaining_count = self.one_special_offer(
+                total_with_offer, already_calculated = self.one_special_offer(
                     sku, offer)
-                item_count = remaining_count
-                print('remaining count:', remaining_count)
+                item_count -= already_calculated
+                print('remaining count:', item_count)
                 total += total_with_offer
         total += self.reminder_no_discount(sku, item_count)
         return total
@@ -182,6 +182,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
