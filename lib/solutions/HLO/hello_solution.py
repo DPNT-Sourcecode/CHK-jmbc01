@@ -8,12 +8,8 @@ class HelloSolution:
         if not isinstance(friend_name, str):
             raise TypeError("friend_name parameter must be a string")
         try:
-            friend_name.decode('utf-8')
+            friend_name.encode('utf-8').decode('utf-8')
         except UnicodeDecodeError:
-            raise TypeError("friend_name must be a unicode string")
+            raise UnicodeDecodeError("friend_name must be a unicode string")
+        print(f"Hello, {friend_name}!")
         return f"Hello, {friend_name}!"
-
-
-
-
-
