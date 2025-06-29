@@ -46,7 +46,7 @@ class CheckoutSolution:
             {
                 'sku': sku,
                 'count': skus.count(sku),
-                'price': BASIC_PRICES[sku],
+                'price': BASIC_PRICES.get(sku, -1)
             } for sku in set(skus)
         ]
 
@@ -83,6 +83,7 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
 

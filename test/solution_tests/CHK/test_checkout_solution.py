@@ -4,12 +4,9 @@ from solutions.CHK.checkout_solution import CheckoutSolution
 
 class TestCheckout():
     def test_validate_parameter_skus(self):
-        with pytest.raises(ValueError) as e:
-            CheckoutSolution().checkout("")
-        assert str(e.value) == "Input cannot be empty"
-        with pytest.raises(TypeError) as e:
-            CheckoutSolution().checkout(123)
-        assert str(e.value) == "Input must be a string containing SKUs"
+        assert CheckoutSolution().checkout("") == -1
+        assert CheckoutSolution().checkout(None) == -1
+        assert CheckoutSolution().checkout(123) == -1
 
     def test_validate_each_sku(self):
         with pytest.raises(ValueError) as e:
@@ -57,6 +54,7 @@ class TestCheckout():
             "AABBBCCDD") == 100 + 45 + 30 + 40 + 30
         assert CheckoutSolution().checkout(
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
+
 
 
 
