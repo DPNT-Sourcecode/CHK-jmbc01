@@ -60,7 +60,8 @@ class TestCheckout():
         expected_B_5 = 45 + 45 + 30
         expected_C_3 = 60
         expected_D_1 = 15
-        total_expected = expected_A_7 + expected_B_5 + expected_C_3 + expected_D_1
+        total_expected = (
+            expected_A_7 + expected_B_5 + expected_C_3 + expected_D_1)
         assert CheckoutSolution().checkout(random_order) == total_expected
 
     def test_free_item(self):
@@ -74,3 +75,11 @@ class TestCheckout():
         assert CheckoutSolution().checkout("B") == 30
         assert CheckoutSolution().checkout("EE") == 80
         assert CheckoutSolution().checkout("EB") == 70
+
+    def test_multiple_discounts(self):
+        assert CheckoutSolution().checkout("AAAAAAAA") == 330
+        assert CheckoutSolution().checkout("AAAAAAAAA") == 380
+
+    def test_multiple_free_deductions(self):
+        assert CheckoutSolution().checkout("EEEEBB") == 160
+
