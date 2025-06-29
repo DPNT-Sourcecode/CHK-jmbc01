@@ -170,6 +170,7 @@ class CheckoutSolution:
         total_with_offer = offer_count * special_offer['price']
         print('total with offer, one_special_offer():', total_with_offer)
         already_calculated = product_count - reminder_items
+        print('already_calculated:', already_calculated)
         return total_with_offer, already_calculated
 
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
@@ -192,6 +193,7 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
 
