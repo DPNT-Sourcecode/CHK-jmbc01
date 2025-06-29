@@ -192,7 +192,3 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
-
-
-
-
