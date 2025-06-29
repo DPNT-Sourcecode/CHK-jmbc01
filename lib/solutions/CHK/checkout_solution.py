@@ -95,19 +95,19 @@ class CheckoutSolution:
 
         # order special offers by amount descending
         special_offers_sorted = sorted(special_offers, key=lambda x: x['amount'], reverse=True)
-
+        total = 0
+        item_count = item['count']
         for offer in special_offers_sorted:
-            if item['count'] >= offer['amount']:
+            if item_count >= offer['amount']:
                 total_with_offer, remaining_count = self.one_special_offer(item, offer)
-
-        
-        # how many sets of products could qualify for the special offer
-        offer_count = item['count'] // special_offer['amount']
-        total_with_offer = offer_count * special_offer['price']
-        # remaining products
-        remaining_count = item['count'] % special_offer['amount']
-        remaining_total = item['price'] * remaining_count
-        return total_with_offer + remaining_total
+                item_count -= remaining_count
+                total += total_with_offer
+            else:
+                # if the item count is less than the offer amount
+                total += self.reminder_no_discount(item)
+            if item_count == 0:
+                break
+        return total
 
     def one_special_offer(self, item: dict, special_offer: dict) -> int:
         # how many sets of products could qualify for the special offer
@@ -130,5 +130,6 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
