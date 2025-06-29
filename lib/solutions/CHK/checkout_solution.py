@@ -91,7 +91,7 @@ class CheckoutSolution:
                     print('not enough items to apply promotion:', promotion)
                     continue
                 how_many_times_promotion_applies, _ = divmod(
-                    actual_amount, qualifying_amount)
+                    items_in_basket, qualifying_amount)
                 free_items_to_deduct = (
                     how_many_times_promotion_applies * free_item_amount)
                 print('Deducting free items:', free_items_to_deduct, sku_free_item)
@@ -167,6 +167,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
