@@ -101,7 +101,7 @@ FREE_ITEMS_PROMOTIONS = {
     }],
 }
 
-BUY_ANY_GROUP_OF_ITEMS = [
+GROUP_DISCOUNTS = [
     {
         'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
         'qualifying_amount': 3,
@@ -256,7 +256,7 @@ class CheckoutSolution:
         if not amount_qualifies:
             return False
         group_promotions_items = [
-            offer['qualifying_items'] for offer in BUY_ANY_GROUP_OF_ITEMS]
+            offer['qualifying_items'] for offer in GROUP_DISCOUNTS]
         if sku not in group_promotions_items:
             return False
         return True
@@ -325,5 +325,6 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
