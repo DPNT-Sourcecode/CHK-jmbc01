@@ -8,5 +8,3 @@ class HelloSolution:
         if not isinstance(friend_name, str):
             raise TypeError("friend_name parameter must be a string")
         return f"Hello, {friend_name}!"
-
-

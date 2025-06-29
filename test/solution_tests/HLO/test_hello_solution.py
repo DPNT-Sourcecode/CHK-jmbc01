@@ -16,6 +16,3 @@ class TestHello():
     def test_string(self):
         with pytest.raises(TypeError):
             HelloSolution().hello(123)
-
-
-
