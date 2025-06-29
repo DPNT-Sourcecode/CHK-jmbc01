@@ -91,10 +91,14 @@ class CheckoutSolution:
             if item_count == 0:
                 break
             if item_count >= offer['amount']:
+                print('item count', item_count, 'offer amount', offer['amount'])
                 total_with_offer, remaining_count = self.one_special_offer(item, offer)
                 item_count -= remaining_count
                 total += total_with_offer
+                print('total inside loop', total, 'remaining count', remaining_count)
+            
             else:
+                print('running reminder')
                 # if the item count is less than the offer amount
                 total += self.reminder_no_discount(item)
             
@@ -107,6 +111,7 @@ class CheckoutSolution:
         total_with_offer = offer_count * special_offer['price']
         # remaining products
         remaining_count = item['count'] % special_offer['amount']
+        print('offer count', offer_count, 'total with offer', total_with_offer, 'remaining count', remaining_count)
         return total_with_offer, remaining_count
 
     def reminder_no_discount(self, item: dict) -> int:
@@ -122,4 +127,5 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
