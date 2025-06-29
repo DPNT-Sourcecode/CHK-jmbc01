@@ -8,4 +8,3 @@ class TestSum():
     def test_string(self):
         with pytest.raises(TypeError):
             SumSolution().compute("a", "b")
-

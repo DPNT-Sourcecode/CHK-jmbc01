@@ -7,4 +7,3 @@ class SumSolution:
         if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
             raise TypeError("Both x and y must be numbers")
         return x + y
-
