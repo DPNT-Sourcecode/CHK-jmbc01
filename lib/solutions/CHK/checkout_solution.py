@@ -65,13 +65,6 @@ class CheckoutSolution:
                 'price': BASIC_PRICES.get(sku)
             }
         updated_basket = self._update_basket_with_free_items(items_dict)
-        # for sku, item in updated_basket.items():
-        #     if item['count'] < 0:
-        #         raise ValueError(
-        #             f"Invalid basket: {sku} has negative count: {item['count']}")
-        #     if item['count'] == 0:
-        #         del updated_basket[sku]
-        # print('setting basket:', updated_basket)
         return updated_basket
 
     def _update_basket_with_free_items(self, basket) -> dict:
@@ -116,6 +109,7 @@ class CheckoutSolution:
         return updated_basket
 
     def has_special_offer(self, sku: str) -> bool:
+        print('has special offer')
         is_in_special_offers = sku in SPECIAL_OFFERS
         if not is_in_special_offers:
             return False
@@ -143,6 +137,7 @@ class CheckoutSolution:
             special_offers, key=lambda x: x['amount'], reverse=True)
         total = 0
         item_count = self.basket[sku]['count']
+        print('item count:', item_count)
         for offer in special_offers_sorted:
 
             if item_count == 0:
@@ -162,11 +157,15 @@ class CheckoutSolution:
         offer_count, remaining_count = divmod(
             self.basket[sku]['count'], special_offer['amount']
         )
+        print('offer count:', offer_count)
+        print('remaining count:', remaining_count)
         total_with_offer = offer_count * special_offer['price']
+        print('total with offer:', total_with_offer)
         return total_with_offer, remaining_count
 
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
         # if no discount, return the total price
+        print('reminder no discount')
         price = self.basket[sku]['price']
         if not count:
             count = self.basket[sku]['count']
@@ -181,11 +180,3 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
-
-
-
-
-
-
-
-
