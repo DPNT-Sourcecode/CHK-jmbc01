@@ -76,16 +76,20 @@ class CheckoutSolution:
             free_item_promotions = FREE_ITEMS_PROMOTIONS[sku]
             for promotion in free_item_promotions:
                 sku_item_to_get_for_free = promotion['free_item']
-                items_in_basket = basket.get(sku_item_to_get_for_free, {'count': 0})
-                can_use_promotion = items_in_basket < promotion['free_item_amount']
+                items_in_basket = basket.get(
+                    sku_item_to_get_for_free, {'count': 0})
+                can_use_promotion = (
+                    items_in_basket < promotion['free_item_amount'])
                 if not can_use_promotion:
                     continue
                 qualifying_amount = promotion['qualifying_amount']
                 actual_amount = item['count']
                 if actual_amount < qualifying_amount:
                     continue
-                how_many_times_promotion_applies, _ = divmod(actual_amount, qualifying_amount)
-                free_items_to_deduct = how_many_times_promotion_applies * promotion['free_item_amount']
+                how_many_times_promotion_applies, _ = divmod(
+                    actual_amount, qualifying_amount)
+                free_items_to_deduct = (
+                    how_many_times_promotion_applies * promotion['free_item_amount'])
                 if sku_item_to_get_for_free in updated_basket:
                     updated_basket[sku_item_to_get_for_free]['count'] -= free_items_to_deduct
         return updated_basket
@@ -96,7 +100,7 @@ class CheckoutSolution:
             return False
         amounts_qualifying = [
             offer['amount'] for offer in SPECIAL_OFFERS[sku]]
-        # todo is any correct?
+
         amount_qualifies = any(self.basket[sku]['count'] >= amount for amount in amounts_qualifying)
         if not amount_qualifies:
             return False
@@ -133,10 +137,10 @@ class CheckoutSolution:
 
     def one_special_offer(self, sku: str, special_offer: dict) -> int:
         # how many sets of products could qualify for the special offer
-        offer_count = item['count'] // special_offer['amount']
+        offer_count, remaining_count = divmod(
+            self.basket[sku]['count'], special_offer['amount']
+        )
         total_with_offer = offer_count * special_offer['price']
-        # remaining products
-        remaining_count = item['count'] % special_offer['amount']
         return total_with_offer, remaining_count
 
     def reminder_no_discount(self, sku: str, count: int = 0) -> int:
@@ -145,7 +149,6 @@ class CheckoutSolution:
         if not count:
             count = self.basket[sku]['count']
         return price * count
-
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
@@ -156,6 +159,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
