@@ -31,11 +31,6 @@ class CheckoutSolution:
 
         if not all(validated_skus):
             raise ValueError("Invalid SKUs provided.")
-
-        # check for special offers
-        # sum each product
-        # sum the total
-
         sub_totals = self.convert_skus_to_list_of_dict(skus)
         return self.calculate_total(sub_totals)
 
@@ -88,5 +83,6 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
 
