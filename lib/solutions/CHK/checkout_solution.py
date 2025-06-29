@@ -356,10 +356,3 @@ class CheckoutSolution:
             total += product_total
 
         return total
-
-
-
-
-
-
-
