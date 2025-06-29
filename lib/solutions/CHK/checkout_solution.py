@@ -133,6 +133,7 @@ class CheckoutSolution:
                 if sub_total['sku'] == free_item['free_item']:
                     deduction += sets_of_qualifying_items * free_item_count * sub_total['price']
                     break
+        print('Free items deduction:', deduction)
         return deduction
 
     def calculate_total(self, sub_totals: list) -> int:
@@ -149,3 +150,4 @@ class CheckoutSolution:
             print('Final total:', total)
 
         return total
+
