@@ -115,6 +115,26 @@ class CheckoutSolution:
 
         return updated_basket
 
+    def _apply_reduction_round(self, triggers: int, amount_remaining: int, qualifying_amount: int) -> int:
+        updated_amount = amount_remaining
+        triggers = triggers
+        if updated_amount < 0:
+            raise ValueError(
+                f"Amount remaining cannot be negative: {amount_remaining}"
+            )
+        triggers_run = triggers
+        for _ in range(triggers):
+            if updated_amount == 0:
+                return 0
+            if triggers_run == 0:
+                return updated_amount
+            if updated_amount < qualifying_amount:
+                return updated_amount
+            updated_amount -= qualifying_amount
+            triggers_run -= 1
+
+        return updated_amount
+
     def has_special_offer(self, sku: str) -> bool:
         is_in_special_offers = sku in SPECIAL_OFFERS
         if not is_in_special_offers:
@@ -192,3 +212,4 @@ class CheckoutSolution:
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
