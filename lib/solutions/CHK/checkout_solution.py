@@ -186,10 +186,12 @@ class CheckoutSolution:
     def calculate_total(self) -> int:
         total = 0
         for sku in self.unique_skus:
+            print('CALCULATING TOTAL FOR SKU:', sku)
             if self.has_special_offer(sku):
                 total += self.calculate_with_special_offer(sku)
             else:
                 total += self.reminder_no_discount(sku)
         return total
+
 
 
