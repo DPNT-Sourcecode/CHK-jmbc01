@@ -129,6 +129,8 @@ class CheckoutSolution:
             total_with_offer, remaining_count = self.one_special_offer(
                 sku, special_offer)
             remaining_total = self.reminder_no_discount(sku, remaining_count)
+            print('total:', total_with_offer)
+            print('remaining total:', remaining_total)
             total = total_with_offer + remaining_total
             return total
 
@@ -180,3 +182,4 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
