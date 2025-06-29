@@ -93,15 +93,12 @@ class CheckoutSolution:
             remaining_total = self.reminder_no_discount(item, remaining_count)
             return total_with_offer + remaining_total
 
-
         # order special offers by amount descending
         special_offers_sorted = sorted(special_offers, key=lambda x: x['amount'], reverse=True)
 
-        # apply discount
-        # find the reminder
-        # apply discount
-        # find the remainder
-        # apply discount
+        for offer in special_offers_sorted:
+            if item['count'] >= offer['amount']:
+                total_with_offer, remaining_count = self.one_special_offer(item, offer)
 
         
         # how many sets of products could qualify for the special offer
@@ -133,4 +130,5 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
+
 
