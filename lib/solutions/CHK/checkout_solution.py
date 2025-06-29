@@ -46,7 +46,7 @@ class CheckoutSolution:
         if not all(validated_skus):
             return -1
         self.unique_skus = set(skus)
-        basket = self.convert_skus_to_dict(self.unique_skus)
+        self.basket = self.set_basket()
         basket_reduced = self.update_totals_with_free_items(basket)
         return self.calculate_total(basket_reduced)
 
@@ -57,13 +57,13 @@ class CheckoutSolution:
             return False
         return True
 
-    def convert_skus_to_dict(self, skus: str) -> dict:
-
+    def set_basket(self) -> dict:
         items_dict = {}
-        for sku in skus:
+        for sku in self.unique_skus:
+            count = self.unique_skus.count(sku)
             items_dict[sku] = {
                 'sku': sku,
-                'count': skus.count(sku),
+                'count': count,
                 'price': BASIC_PRICES.get(sku)
             }
         return items_dict
@@ -175,5 +175,6 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
 
 
