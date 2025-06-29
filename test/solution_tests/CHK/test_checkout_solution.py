@@ -1,6 +1,7 @@
-from solutions.HLO.hello_solution import HelloSolution
+from solutions.CHK.checkout_solution import CheckoutSolution
 
 
 class TestCheckout():
     def test_checkout(self):
-        assert HelloSolution().checkout("A") == 50
+        assert CheckoutSolution().checkout("A") == 50
+
