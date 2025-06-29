@@ -35,7 +35,16 @@ class CheckoutSolution:
         # check for special offers
         # sum each product
         # sum the total
-        return self.calculate_total(skus)
+        unique_skus = set(skus)
+        sub_totals = [
+            {
+                'sku': sku,
+                'count': skus.count(sku),
+                'price': BASIC_PRICES[sku],
+                'has_offer': sku in SPECIAL_OFFERS,
+            } for sku in unique_skus
+        ]
+        return self.calculate_total(sub_totals)
 
     def validate_each_sku(self, sku: str) -> bool:
         if not isinstance(sku, str):
@@ -44,5 +53,12 @@ class CheckoutSolution:
             raise ValueError(f"Invalid SKU: {sku}")
         return True
 
-    def calculate_total(self, skus: str) -> int:
-        return sum(BASIC_PRICES[sku] for sku in skus)
+    def calculate_total(self, sub_totals: list) -> int:
+        total = 0
+        for item in sub_totals:
+            if item['has_offer']:
+                total -= self.apply_special_offer(item)
+            total += item['price'] * item['count']
+
+        return total
+
