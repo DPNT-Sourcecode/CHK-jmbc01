@@ -139,9 +139,12 @@ class CheckoutSolution:
         remaining_count = item['count'] % special_offer['amount']
         return total_with_offer, remaining_count
 
-    def reminder_no_discount(self, item: dict, count: int) -> int:
+    def reminder_no_discount(self, sku: str, count: int = 0) -> int:
         # if no discount, return the total price
-        return item['price'] * count
+        price = self.basket[sku]['price']
+        if not count:
+            count = self.basket[sku]['count']
+        return price * count
 
 
     def calculate_total(self, sub_totals: list) -> int:
@@ -153,4 +156,5 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
 
