@@ -40,7 +40,6 @@ class CheckoutSolution:
             return -1
         if not isinstance(skus, str):
             return -1
-
         validated_skus = [self.validate_each_sku(sku) for sku in skus]
         if not all(validated_skus):
             return -1
@@ -123,6 +122,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(item, item['count'])
 
         return total
+
 
 
 
