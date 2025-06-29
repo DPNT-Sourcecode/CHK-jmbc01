@@ -20,7 +20,7 @@ class TestCheckout():
         assert CheckoutSolution().checkout("C") == 20
         assert CheckoutSolution().checkout("AB") == 80
 
-    def test_convert_skus_to_list_of_dict(self):
+    def test_set_basket(self):
         skus = "AABBC"
         expected = {
             'A': {'count': 2, 'price': 50},
@@ -28,7 +28,7 @@ class TestCheckout():
             'C': {'count': 1, 'price': 20}
         }
         # assert correct count for each sku
-        result = CheckoutSolution().convert_skus_to_dict(skus)
+        result = CheckoutSolution().set_basket(skus)
         assert expected['A']['count'] == result['A']['count']
         assert expected['B']['count'] == result['B']['count']
         assert expected['C']['count'] == result['C']['count']
