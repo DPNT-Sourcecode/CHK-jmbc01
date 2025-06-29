@@ -45,6 +45,7 @@ class CheckoutSolution:
         if not all(validated_skus):
             return -1
         sub_totals = self.convert_skus_to_list_of_dict(skus)
+        print('CHECKOUT SUB TOTALS', sub_totals)
         return self.calculate_total(sub_totals)
 
     def validate_each_sku(self, sku: str) -> bool:
@@ -128,6 +129,7 @@ class CheckoutSolution:
 
     def calculate_total(self, sub_totals: list) -> int:
         total = 0
+        print('SUB TOTALS', sub_totals)
         for item in sub_totals:
             print('LOOPING ITEM', item)
             if self.has_special_offer(item):
@@ -136,10 +138,3 @@ class CheckoutSolution:
                 total += item['price'] * item['count']
 
         return total
-
-
-
-
-
-
-
