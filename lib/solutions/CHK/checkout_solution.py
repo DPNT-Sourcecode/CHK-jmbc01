@@ -101,7 +101,7 @@ FREE_ITEMS_PROMOTIONS = {
     }],
 }
 
-BUY_ANY_GROUP_OF_ITEMS = [
+GROUP_DISCOUNTS = [
     {
         'qualifying_items': ['S', 'T', 'X', 'Y', 'Z'],
         'qualifying_amount': 3,
@@ -314,6 +314,18 @@ class CheckoutSolution:
 
         return total
 
+    def has_group_discount(self, sku: str) -> bool:
+        triggers_skus = []
+        for group in GROUP_DISCOUNTS:
+            triggers_skus.extend(group['qualifying_items'])
+        return sku in triggers_skus
+
+
+    def calculate_with_group_discount(self, sku: str) -> int:
+        # for each group discount, find the amopunts of items eligible for trigger
+        total = 0
+        for group in GROUP_DISCOUNTS:
+
     def calculate_total(self) -> int:
         total = 0
         for sku in self.unique_skus:
@@ -322,8 +334,11 @@ class CheckoutSolution:
                 product_total += self.calculate_with_special_offer(sku)
             else:
                 product_total += self.reminder_no_discount(sku)
+            if self.has_group_discount(sku):
+                product_total += self.calculate_with_group_discount(sku)
             total += product_total
         return total
+
 
 
 
