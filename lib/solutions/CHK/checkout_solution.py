@@ -135,10 +135,13 @@ class CheckoutSolution:
         for item in sub_totals:
             print('LOOPING ITEM', item)
             if self.has_special_offer(item):
-                return self.calculate_with_special_offer(item)
+                total += self.calculate_with_special_offer(item)
+                print('total after special offer', total)
             else:
-                return self.reminder_no_discount(item, item['count'])
+                total += self.reminder_no_discount(item, item['count'])
+                print('total after no special offer', total)
 
         return total
+
 
 
