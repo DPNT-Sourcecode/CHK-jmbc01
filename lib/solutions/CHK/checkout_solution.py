@@ -75,11 +75,12 @@ class CheckoutSolution:
                 continue
             free_item_promotions = FREE_ITEMS_PROMOTIONS[sku]
             for promotion in free_item_promotions:
-                sku_item_to_get_for_free = promotion['free_item']
+                free_item_amount = promotion.get('free_item_amount', 0)
+                sku_free_item = promotion['free_item']
                 items_in_basket = basket.get(
-                    sku_item_to_get_for_free, {'count': 0})
+                    sku_free_item, {'count': 0})
                 can_use_promotion = (
-                    items_in_basket < promotion['free_item_amount'])
+                    items_in_basket < free_item_amount)
                 if not can_use_promotion:
                     continue
                 qualifying_amount = promotion['qualifying_amount']
@@ -89,9 +90,9 @@ class CheckoutSolution:
                 how_many_times_promotion_applies, _ = divmod(
                     actual_amount, qualifying_amount)
                 free_items_to_deduct = (
-                    how_many_times_promotion_applies * promotion['free_item_amount'])
-                if sku_item_to_get_for_free in updated_basket:
-                    updated_basket[sku_item_to_get_for_free]['count'] -= free_items_to_deduct
+                    how_many_times_promotion_applies * free_item_amount)
+                if sku_free_item in updated_basket:
+                    updated_basket[sku_free_item]['count'] -= free_items_to_deduct  # noqa
         return updated_basket
 
     def has_special_offer(self, sku: str) -> bool:
@@ -159,6 +160,7 @@ class CheckoutSolution:
                 total += self.reminder_no_discount(sku)
 
         return total
+
 
 
 
