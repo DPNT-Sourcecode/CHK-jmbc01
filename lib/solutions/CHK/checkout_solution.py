@@ -7,21 +7,6 @@ BASIC_PRICES = {
     'E': 40,
 }
 
-SPECIAL_OFFERS_OLD = {
-    'A': {
-        'amount': 3,
-        'price': 130,
-    },
-    'B': {
-        'amount': 2,
-        'price': 45,
-    },
-    'E': {
-        'amount': 2,
-        'price': 40,
-    },
-}
-
 SPECIAL_OFFERS = {
     'A': [{
         'amount': 3,
@@ -34,11 +19,16 @@ SPECIAL_OFFERS = {
         'amount': 2,
         'price': 45,
     }],
+}
+
+FREE_ITEMS = {
     'E': [{
-        'amount': 2,
-        'price': 40,
+        'qualifying_amount': 2,
+        'free_item': 'B',
+        'free_item_amount': 1,
     }],
 }
+
 
 class CheckoutSolution:
 

@@ -53,5 +53,12 @@ class TestCheckout():
         assert CheckoutSolution().checkout(
             "AABBBCCDDDD") == 100 + 45 + 30 + 40 + 60
         assert CheckoutSolution().checkout("") == 0
+        random_order = "ABCDCBAABCABBAAA"
+        expected_A_7 = 200 + 100
+        expected_B_5 = 45 + 45 + 30
+        expected_C_3 = 60
+        total_expected = expected_A_7 + expected_B_5 + expected_C_3
+        assert CheckoutSolution().checkout(random_order) == total_expected
+        assert CheckoutSolution().checkout("EEB") == 40
 
-
+    
