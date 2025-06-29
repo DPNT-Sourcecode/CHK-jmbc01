@@ -59,6 +59,3 @@ class TestCheckout():
 
     def test_multiple_free_deductions(self):
         assert CheckoutSolution().checkout("EEEEBB") == 160
-
-
-
